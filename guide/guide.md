@@ -11,13 +11,13 @@ An example Solidity smart contract (implementing a wallet) can be seen below.
 Source files start with a `pragma` statement describing the _compiler version_ to use.
 A source file can then define multiple _contracts_.
 The example below has a single contract named `Wallet`.
-It is also possible to _import_ other contracts from other source files.
 
 At a first glance, smart contracts are similar to simple classes in object-oriented programming. Contracts can define
 - _state variables_ which define the data stored on the blockchain and
 - _functions_ that can manipulate the data and interact with other accounts.
 
-Solidity also supports _inheritance_ between contracts.
+
+It is also possible to _import_ other contracts from other source files and Solidity also supports _inheritance_ between contracts.
 
 ```
 pragma solidity ^0.5.0;
@@ -103,7 +103,19 @@ For more information, see the [visibility section of the documentation](https://
 
 ### Handling Ether
 
-TODO
+Each address (contract or external) is associated with a balance in Ether, the native cryptocurrency of Ethereum.
+Solidity provides various language features to query balances and transfer Ether.
+The `address` type has a field `balance` which can query the balance.
+For example, to query the balance of the current contract in a function we can use `address(this).balance`.
+
+There is another flavour of the `address` type called `address payable`, which is a special address that can receive Ether (similarly to `payable` functions).
+A `payable address` has two functions to transfer Ether: `transfer` and `send`.
+The difference between the two is that in case of a falilure, `transfer` throws an exception while `send` indicates it with a false return value.
+In the example above, it is safe to use `transfer` in the `withdraw` function because if it fails, the exception is propagated and the whole transaction is reverted.
+However, if we used `send` we should also make sure to check its return value and only decrease the balance of the user if sending was successful.
+
+TODO: payable Functions, msg.value, fallback
+
 
 ### Error handling
 
