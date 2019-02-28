@@ -46,7 +46,7 @@ contract Wallet {
 
 ### State variables
 
-The example above defines two state variables.
+The Wallet example defines two state variables.
 - `transactions` is an unsigned integer (`uint`), storing the number of transactions in the current wallet.
 - `balances` is a _mapping_ from addresses to integers, storing the balance of each user. Mappings work similarly to maps in Java/C++ or dictionaries in C#/Python.
 
@@ -78,7 +78,7 @@ However, there are a few remarkable differences.
 
 Functions in Solidity can read and manipulate the state variables and interact with other contracts and accounts.
 Functions can have parameters (e.g., `withdraw` in the example has one parameter) and can return values (e.g., `getBalance` returns one).
-The example above specifies three functions.
+The Wallet example specifies three functions.
 - The `deposit` function is `public` (can be called by anyone) and `payable`, which means that it can receive Ether as part of the call.
 Functions can access a special `msg` field, which stores information about the function call.
 For example, the `deposit` function reads the amount of Ether associated with the call from the `msg.value` field and increases the balance of the caller, whose address is stored in `msg.sender`.
@@ -94,7 +94,7 @@ The `require` statement checks the condition and reverts the whole transaction i
 Otherwise it updates the mapping by decreasing the balance of the caller and then transfers the required amount using the `transfer` function.
 Finally, the function increments the `transactions` counter.
 
-Besides the basic statements illustrated by the example, functions can have other statements such as selection (`if then else`) or loops (`for`, `while`).
+Besides the basic statements illustrated by the Wallet example, functions can have other statements such as selection (`if then else`) or loops (`for`, `while`).
 However, as execution costs a transaction fee per instruction (gas), it is recommended to avoid complex operations like loops if possible.
 Furthermore, instructions writing the blockchain state are more expensive to execute, therefore it is also recommended to minimize the number of writes.
 
@@ -106,16 +106,37 @@ For more information, see the [visibility section of the documentation](https://
 Each address (contract or external) is associated with a balance in Ether, the native cryptocurrency of Ethereum.
 Solidity provides various language features to query balances and transfer Ether.
 The `address` type has a field `balance` which can query the balance.
-For example, to query the balance of the current contract in a function we can use `address(this).balance`.
+For example, to query the balance of the current contract inside a function we can use `address(this).balance`:
+```
+function getMyBalance() public returns (uint) {
+    return address(this).balance;
+}
+```
 
 There is another flavour of the `address` type called `address payable`, which is a special address that can receive Ether (similarly to `payable` functions).
-A `payable address` has two functions to transfer Ether: `transfer` and `send`.
-The difference between the two is that in case of a falilure, `transfer` throws an exception while `send` indicates it with a false return value.
-In the example above, it is safe to use `transfer` in the `withdraw` function because if it fails, the exception is propagated and the whole transaction is reverted.
-However, if we used `send` we should also make sure to check its return value and only decrease the balance of the user if sending was successful.
+For example, `msg.sender` in a function has the `address payable` type.
+A payable address has two functions to transfer Ether: `transfer` and `send`.
+The difference between the two is that in case of a failure, `transfer` throws an exception while `send` indicates it with a false return value.
+In the Wallet example, we use `transfer` in the `withdraw` function because if it fails, the exception is propagated and the whole transaction is reverted (including the instruction that decreased the balance of the caller).
+It is a common programming error to use `send` without checking its return value.
 
-TODO: payable Functions, msg.value, fallback
+As already seen in the Wallet example, functions can be marked with the `payable` keyword, allowing the caller to attach Ether to the call.
+The Ether attached is automatically added to the balance of the contract, but can also be queried from the `msg.value` field.
+When a contract wants to call another contract and send Ether, it can set the amount with the `value` function.
+For example, if we have a `Wallet w` field in another contract, we can call `w.deposit.value(amount)()` to deposit a given amount.
 
+Each contract can have at most one function _without a name_, which is called the _fallback function_.
+This function gets executed when a call to the contract matches no other function.
+Furthermore it is also executed when `transfer` or `send` is used to transfer Ether to a contract.
+However, this requires the fallback function to be marked as `payable`.
+An example fallback function can be seen below.
+```
+function () public payable {
+    // Do something
+}
+```
+
+TODO: units
 
 ### Error handling
 
