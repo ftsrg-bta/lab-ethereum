@@ -7,10 +7,10 @@ The current guide is based on version 0.5.0, but the latest documentation is ava
 
 ### Layout of source files
 
-An example Solidity smart contract (implementing a wallet) can be seen below.
+An example Solidity smart contract (implementing a simple bank) can be seen below.
 Source files start with a `pragma` statement describing the _compiler version_ to use.
 A source file can then define multiple _contracts_.
-The example below has a single contract named `Wallet`.
+The example below has a single contract named `SimpleBank`.
 
 At a first glance, smart contracts are similar to simple classes in object-oriented programming. Contracts can define
 - _state variables_ which define the data stored on the blockchain and
@@ -22,7 +22,7 @@ It is also possible to _import_ other contracts from other source files and Soli
 ```
 pragma solidity ^0.5.0;
 
-contract Wallet {
+contract SimpleBank {
     uint public transactions;
     mapping(address=>uint) balances;
 
@@ -46,8 +46,8 @@ contract Wallet {
 
 ### State variables
 
-The Wallet example defines two state variables.
-- `transactions` is an unsigned integer (`uint`), storing the number of transactions in the current wallet.
+The SimpleBank example defines two state variables.
+- `transactions` is an unsigned integer (`uint`), storing the number of transactions in the current bank instance.
 - `balances` is a _mapping_ from addresses to integers, storing the balance of each user. Mappings work similarly to maps in Java/C++ or dictionaries in C#/Python.
 
 #### Types
@@ -78,7 +78,7 @@ However, there are a few remarkable differences.
 
 Functions in Solidity can read and manipulate the state variables and interact with other contracts and accounts.
 Functions can have parameters (e.g., `withdraw` in the example has one parameter) and can return values (e.g., `getBalance` returns one).
-The Wallet example specifies three functions.
+The SimpleBank example specifies three functions.
 - The `deposit` function is `public` (can be called by anyone) and `payable`, which means that it can receive Ether as part of the call.
 Functions can access a special `msg` field, which stores information about the function call.
 For example, the `deposit` function reads the amount of Ether associated with the call from the `msg.value` field and increases the balance of the caller, whose address is stored in `msg.sender`.
@@ -88,13 +88,13 @@ Finally, the function increments the `transactions` counter.
 The `pure` keyword (instead of `view`) is even more restrictive: such functions cannot read or write the state.
 The function also specifies a return value with `returns (...)`.
 This function gets and returns the balance of the caller (`msg.sender`).
-- The function `withdraw` specifies a single `uint` parameter called `amount`, corresponding to the amount that the caller wants to withdraw from the wallet.
-The function first checks whether the caller has enough Ether in the wallet using a `require` statement.
+- The function `withdraw` specifies a single `uint` parameter called `amount`, corresponding to the amount that the caller wants to withdraw from the bank.
+The function first checks whether the caller has enough Ether in the bank using a `require` statement.
 The `require` statement checks the condition and reverts the whole transaction if the condition is false.
 Otherwise it updates the mapping by decreasing the balance of the caller and then transfers the required amount using the `transfer` function.
 Finally, the function increments the `transactions` counter.
 
-Besides the basic statements illustrated by the Wallet example, functions can have other statements such as selection (`if then else`) or loops (`for`, `while`).
+Besides the basic statements illustrated by the SimpleBank example, functions can have other statements such as selection (`if then else`) or loops (`for`, `while`).
 However, as execution costs a transaction fee per instruction (gas), it is recommended to avoid complex operations like loops if possible.
 Furthermore, instructions writing the blockchain state are more expensive to execute, therefore it is also recommended to minimize the number of writes.
 
@@ -117,13 +117,13 @@ There is another flavour of the `address` type called `address payable`, which i
 For example, `msg.sender` in a function has the `address payable` type.
 A payable address has two functions to transfer Ether: `transfer` and `send`.
 The difference between the two is that in case of a failure, `transfer` throws an exception while `send` indicates it with a false return value.
-In the Wallet example, we use `transfer` in the `withdraw` function because if it fails, the exception is propagated and the whole transaction is reverted (including the instruction that decreased the balance of the caller).
+In the SimpleBank example, we use `transfer` in the `withdraw` function because if it fails, the exception is propagated and the whole transaction is reverted (including the instruction that decreased the balance of the caller).
 It is a common programming error to use `send` without checking its return value.
 
-As already seen in the Wallet example, functions can be marked with the `payable` keyword, allowing the caller to attach Ether to the call.
+As already seen in the SimpleBank example, functions can be marked with the `payable` keyword, allowing the caller to attach Ether to the call.
 The Ether attached is automatically added to the balance of the contract, but can also be queried from the `msg.value` field.
 When a contract wants to call another contract and send Ether, it can set the amount with the `value` function.
-For example, if we have a `Wallet w` field in another contract, we can call `w.deposit.value(amount)()` to deposit a given amount.
+For example, if we have a `SimpleBank sb` field in another contract, we can call `sb.deposit.value(amount)()` to deposit a given amount.
 
 Each contract can have at most one function _without a name_, which is called the _fallback function_.
 This function gets executed when a call to the contract matches no other function.
@@ -136,7 +136,9 @@ function () public payable {
 }
 ```
 
-TODO: units
+There is no distinct type for Ether, unsigned integers are used.
+The default unit is Wei, but literals can be specified using suffixes such as `wei`, `finney`, `szabo` or `ether`.
+For example, `uint amount = 1 ether;` will store `10^18` in the variable `amount`.
 
 ### Error handling
 
