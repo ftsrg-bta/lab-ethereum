@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-contract Wallet {
+contract SimpleBank {
     uint public transactions;
     mapping(address=>uint) balances;
     
