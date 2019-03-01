@@ -173,5 +173,63 @@ For more complex contracts and scenarios, one should also consider the [Truffle 
 
 In the following, we cover the basics of [Remix](remix.ethereum.org).
 
+### Writing a contract
 
-TODO
+You can create or import files in Remix with the icons on the top left.
+As an example, create a new file named `SimpleBank.sol` and copy the code from the example above.
+Remix supports syntax highlighting and auto completion as well.
+
+![A smart contract in the editor of Remix](img/remix-editor.png)
+
+### Compiling a contract
+
+The contract can be compiled by selecting the _Compile_ tab on the top right.
+
+![Compiling in Remix](img/remix-compiler.png)
+
+You can select a compiler version and click _Start to compile_ or you can also turn on the _Auto compile_ option.
+On a successful compilation, you will receive a green message with the name of the contract.
+
+### Testing a contract
+
+For a simple local test, select the _Run_ tab on the top right.
+The default _environment_ is JavaScript VM, which runs an Ethereum Virtual Machine (EVM) locally (i.e., it does not connect to the real network).
+This makes testing quick and free.
+Remix also supports connecting to a real network by selecting the Web3 option as an environment (which requires a wallet first).
+For the purpose of this tutorial we will be simply working with the local JavaScrip VM environment.
+Remix also creates some test _accounts_ by default with 100 Ether each.
+The account currently selected is used as the sender when you issue transactions.
+You can specify the _gas limit_ and you can also attach ether to the call with the _value_ field.
+
+![Deploying in Remix](img/remix-deploy.png)
+
+The first step is to deploy the contract.
+This can be done by selecting the contract name from the drop down menu and then clicking _Deploy_.
+The contract should appear below in the list of deployed contracts.
+You can also see that the balance of the selected account decreased a bit.
+This is because deploying a contract is a special transaction that also costs execution fee (gas).
+
+If you click on a deployed contract, its public interface appears.
+Our example, `SimpleBank` has 4 functions.
+You can see that `view` functions are marked with a different color.
+These do not result in transactions and therefore have no execution fee.
+Click on a function to execute it.
+If a function has parameters (such as `withdraw`), you can specify its parameters in the textboxes next to the name of the function.
+After executing the function, the return value (if any) appears below.
+
+![The deployed contract in Remix](img/remix-deployed.png)
+
+You can also inspect the details of the transactions in the middle below the editor.
+For example, you can see the deployment transaction below.
+
+![Details of a transaction in Remix](img/remix-details.png)
+
+You can now try playing around with `SimpleBank`.
+For example, you can set the _value_ to 10 Ether and call `deposit`.
+Then `getBalance` should return 10000000000000000000 (Wei).
+Calling `transactions` should return 1.
+If you switch to a different account and call `getBalance` you should see 0.
+If you try to withdraw, the transaction should fail due to `require`.
+Switching back to the previous account, `deposit` should work (for no more than 10 Ether).
+
+If you make modifications to the contract, don't forget to compile and deploy again!
