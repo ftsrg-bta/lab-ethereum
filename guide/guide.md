@@ -142,7 +142,16 @@ For example, `uint amount = 1 ether;` will store `10^18` in the variable `amount
 
 ### Error handling
 
-TODO
+Transactions in Ethereum work in an atomic way: if there is an error, the whole transaction gets reverted.
+Errors can happen due to some condition in the execution, such as running out of the execution fee or indexing an array out of bounds.
+However, there are multiple ways for the programmer to raise an error.
+- `require(...)` checks if a condition holds and if not, it reverts the transaction. It is recommended to be used for example to validate parameters at the beginning of the function.
+- `assert(...)` is similar to `require` in its effect, but it is recommended to use for checking conditions that should not fail. Proper code should never reach an assertion failure. In contrast, it is normal for `require` to raise an error.
+- `revert()` simply reverts the transaction.
+
+When functions call other functions, the errors propagate up, making the whole chain of calls revert.
+However, there are a few exceptions from this rule: `send`, `call`, `delegatecall` and `staticcall` only indicate the error in their return value.
+These functions should be used with caution.
 
 ### Additional language elements
 
