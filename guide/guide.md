@@ -3,7 +3,7 @@
 ## Solidity and Ethereum basics
 
 Solidity is a rapidly evolving language, but it has a well written and extensive [documentation](https://solidity.readthedocs.io/en/v0.5.0/).
-The current guide is based on version 0.5.0, but the latest documentation is available at [solidity.readthedocs.io/en/latest](https://solidity.readthedocs.io/en/latest/).
+The current guide is based on version 0.5.0 (released on November 13, 2018), but the latest documentation is available at [solidity.readthedocs.io/en/latest](https://solidity.readthedocs.io/en/latest/).
 
 ### Layout of source files
 
@@ -153,10 +153,25 @@ When functions call other functions, the errors propagate up, making the whole c
 However, there are a few exceptions from this rule: `send`, `call`, `delegatecall` and `staticcall` only indicate the error in their return value.
 These functions should be used with caution.
 
-### Additional language elements
+### Further reading
 
-TODO
+Solidity supports some other language elements that were not discussed here, including [function modifiers](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#function-modifiers), [events](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#events), [inheritance](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#inheritance), [interfaces](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#interfaces) and [libraries](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#libraries).
+For more information, please refer to the documentation.
+
+While it may seem easy to develop Solidity code, it is easy to make mistakes.
+Since the Ethereum blockchain is public anyone can exploit such bugs, causing serious financial damages (e.g., [reentrancy in the DAO](https://medium.com/swlh/the-story-of-the-dao-its-history-and-consequences-71e6a8a551ee) or [overflow in the BECToken](https://medium.com/@peckshield/alert-new-batchoverflow-bug-in-multiple-erc20-smart-contracts-cve-2018-10299-511067db6536)).
+It is therefore highly recommended to read about [security considerations](https://solidity.readthedocs.io/en/v0.5.0/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
 
 ## Development and testing
+
+As with other programming languages, development requires some tools.
+[Visual Studio Code](code.visualstudio.com) has a Solidity extension to edit Solidity contracts.
+The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.0/installing-solidity.html), which can translate the contract into EVM bytecode.
+Alternatively, [Remix](remix.ethereum.org) can also be used, which is a web-based IDE supporting editing, compiling and testing.
+In order to deploy a contract to a real network one also needs a wallet such as [Metamask](metamask.io) or [Mist](github.com/ethereum/mist).
+For more complex contracts and scenarios, one should also consider the [Truffle Suite](truffleframework.com), providing various development tools.
+
+In the following, we cover the basics of [Remix](remix.ethereum.org).
+
 
 TODO
