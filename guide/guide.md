@@ -1,4 +1,7 @@
-# Solidity/Ethereum Development Quick Guide
+# Solidity/Ethereum development quick guide
+
+This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [
+Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
 
 ## Solidity and Ethereum basics
 
