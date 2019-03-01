@@ -11,16 +11,16 @@ The current guide is based on version 0.5.0 (released on November 13, 2018), but
 ### Layout of source files
 
 An example Solidity smart contract (implementing a simple bank) can be seen below.
-Source files start with a `pragma` statement describing the _compiler version_ to use.
+Source files start with a [_pragma_](https://solidity.readthedocs.io/en/v0.5.0/layout-of-source-files.html#pragmas) statement describing the _compiler version_ to use.
 A source file can then define multiple _contracts_.
 The example below has a single contract named `SimpleBank`.
 
 At a first glance, smart contracts are similar to simple classes in object-oriented programming. Contracts can define
-- _state variables_ which define the data stored on the blockchain and
-- _functions_ that can manipulate the data and interact with other accounts.
+- [_state variables_](https://solidity.readthedocs.io/en/v0.5.0/structure-of-a-contract.html#state-variables), which define the data stored on the blockchain and
+- [_functions_](https://solidity.readthedocs.io/en/v0.5.0/structure-of-a-contract.html#functions) that can manipulate the data and interact with other accounts.
 
 
-It is also possible to _import_ other contracts from other source files and Solidity also supports _inheritance_ between contracts.
+It is also possible to [_import_](https://solidity.readthedocs.io/en/v0.5.0/layout-of-source-files.html#importing-other-source-files) other contracts from other source files and Solidity also supports [_inheritance_](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#inheritance) between contracts.
 
 ```
 pragma solidity ^0.5.0;
@@ -56,30 +56,29 @@ The SimpleBank example defines two state variables.
 #### Types
 
 Solidity is a strongly-typed language, i.e., the type of each variable must be explicitly specified.
-Solidity includes various _primitive types_, including:
+Solidity includes various [_primitive types_](https://solidity.readthedocs.io/en/v0.5.0/types.html#value-types), including:
 - Booleans (true/false).
 - Signed and unsigned integers of various bit-lengths: `int8`, `int16`, `int24`, ..., `int256` are signed and `uint8`, `uint16`, `uint24`, ..., `uint256` are unsigned integers with 8, 16, 24, ..., 256 bit-lengths. The default `int` and `uint` types correspond to `int256` and `uint256` respectively.
 - Addresses (`address`) are 160-bit integers corresponding to Ethereum addresses.
 
-Solidity also provides _reference types_, including:
+Solidity also provides [_reference types_](https://solidity.readthedocs.io/en/v0.5.0/types.html#reference-types), including:
 - Arrays (with fixed or dynamic size).
 - Structures (`struct`).
 - Mappings (`mapping(...=>...)`).
 
 These work in a similar way as in other programming languages.
-
 For more information on types, see [types section of the documentation](https://solidity.readthedocs.io/en/v0.5.0/types.html).
 
 #### Visibilities
 
-State variables can be `private`, `internal` or `public`, which are similar to other programming languages.
+State variable [visibility](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#visibility-and-getters) can be `private`, `internal` or `public`, which are similar to other programming languages.
 However, there are a few remarkable differences.
 - For public variables only a getter function is generated automatically. They cannot be directly written by other contracts or transactions.
 - Although private (and internal) variables cannot be accessed and modified by other contracts, transactions on the blockchain are public, so the information stored in such variables is still visible to anyone. Never store passwords or other secret information on the blockchain.
 
 ### Functions
 
-Functions in Solidity can read and manipulate the state variables and interact with other contracts and accounts.
+[Functions](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#functions) in Solidity can read and manipulate the state variables and interact with other contracts and accounts.
 Functions can have parameters (e.g., `withdraw` in the example has one parameter) and can return values (e.g., `getBalance` returns one).
 The SimpleBank example specifies three functions.
 - The `deposit` function is `public` (can be called by anyone) and `payable`, which means that it can receive Ether as part of the call.
@@ -97,7 +96,7 @@ The `require` statement checks the condition and reverts the whole transaction i
 Otherwise it updates the mapping by decreasing the balance of the caller and then transfers the required amount using the `transfer` function.
 Finally, the function increments the `transactions` counter.
 
-Besides the basic statements illustrated by the SimpleBank example, functions can have other statements such as selection (`if then else`) or loops (`for`, `while`).
+Besides the basic statements illustrated by the SimpleBank example, functions can have [other statements](https://solidity.readthedocs.io/en/v0.5.0/control-structures.html) such as selection (`if then else`) or loops (`for`, `while`).
 However, as execution costs a transaction fee per instruction (gas), it is recommended to avoid complex operations like loops if possible.
 Furthermore, instructions writing the blockchain state are more expensive to execute, therefore it is also recommended to minimize the number of writes.
 
@@ -106,7 +105,7 @@ For more information, see the [visibility section of the documentation](https://
 
 ### Handling Ether
 
-Each address (contract or external) is associated with a balance in Ether, the native cryptocurrency of Ethereum.
+Each [address](https://solidity.readthedocs.io/en/v0.5.0/units-and-global-variables.html#address-related) (contract or external) is associated with a balance in Ether, the native cryptocurrency of Ethereum.
 Solidity provides various language features to query balances and transfer Ether.
 The `address` type has a field `balance` which can query the balance.
 For example, to query the balance of the current contract inside a function we can use `address(this).balance`:
@@ -128,7 +127,7 @@ The Ether attached is automatically added to the balance of the contract, but ca
 When a contract wants to call another contract and send Ether, it can set the amount with the `value` function.
 For example, if we have a `SimpleBank sb` field in another contract, we can call `sb.deposit.value(amount)()` to deposit a given amount.
 
-Each contract can have at most one function _without a name_, which is called the _fallback function_.
+Each contract can have at most one function _without a name_, which is called the [_fallback function_](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#fallback-function).
 This function gets executed when a call to the contract matches no other function.
 Furthermore it is also executed when `transfer` or `send` is used to transfer Ether to a contract.
 However, this requires the fallback function to be marked as `payable`.
@@ -147,7 +146,7 @@ For example, `uint amount = 1 ether;` will store `10^18` in the variable `amount
 
 Transactions in Ethereum work in an atomic way: if there is an error, the whole transaction gets reverted.
 Errors can happen due to some condition in the execution, such as running out of the execution fee or indexing an array out of bounds.
-However, there are multiple ways for the programmer to raise an error.
+However, there are multiple ways for the programmer to [raise an error](https://solidity.readthedocs.io/en/v0.5.0/control-structures.html#error-handling-assert-require-revert-and-exceptions).
 - `require(...)` checks if a condition holds and if not, it reverts the transaction. It is recommended to be used for example to validate parameters at the beginning of the function.
 - `assert(...)` is similar to `require` in its effect, but it is recommended to use for checking conditions that should not fail. Proper code should never reach an assertion failure. In contrast, it is normal for `require` to raise an error.
 - `revert()` simply reverts the transaction.
