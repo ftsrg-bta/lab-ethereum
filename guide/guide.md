@@ -3,7 +3,26 @@
 This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [
 Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
 
-## Solidity and Ethereum basics
+## Ethereum basics
+
+Ethereum is a generic blockchain-based computing platform where nodes in a peer-to-peer network are maintaining the ledger.
+Nodes run the _Ethereum Virtual Machine (EVM)_ and execute transactions and contracts compiled into EVM bytecode.
+The main entities on the network are the _accounts_, identified by their 160-bit addresses.
+There are two kinds of accounts.
+- An _externally owned account_ is associated with a balance in Ether, the native cryptocurrency of Ethereum. It is typically owned by human users.
+- A _contract account_, in addition to its balance also stores the compiled contract bytecode and the data associated with the contract.
+
+Contracts are usually written in a high-level language (such as Solidity) and then compiled into EVM bytecode.
+A compiled contract can be deployed to the blockchain by a special transaction.
+From that point on, users or other contracts can interact with the deployed contract by issuing _transactions_.
+The transaction contains the function to be called (with its parameters) and an execution fee called _gas_.
+Optionally, some value of Ether can also be associated with the call.
+The nodes then execute the transaction by running the contract code.
+Each instruction costs some predefined amount of gas.
+If execution runs out of gas, the whole transaction is reverted.
+Otherwise, successful transactions will be included in some of the next blocks as part of the mining process.
+
+## Solidity basics
 
 Solidity is a rapidly evolving language, but it has a well written and extensive [documentation](https://solidity.readthedocs.io/en/v0.5.0/).
 The current guide is based on version 0.5.0 (released on November 13, 2018), but the latest documentation is available at [solidity.readthedocs.io/en/latest](https://solidity.readthedocs.io/en/latest/).
