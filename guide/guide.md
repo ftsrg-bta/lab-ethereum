@@ -1,4 +1,6 @@
-# Solidity/Ethereum development quick guide
+---
+title: Solidity/Ethereum development quick guide
+---
 
 _Ákos Hajdu, Imre Kocsis, Péter Garamvölgyi_
 
