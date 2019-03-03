@@ -9,14 +9,14 @@ Budapest University of Technology and Economics](http://www.bme.hu/?language=en)
 
 ## Ethereum basics
 
-Ethereum is a generic blockchain-based computing platform where nodes in a peer-to-peer network are maintaining the ledger.
-Nodes run the _Ethereum Virtual Machine (EVM)_ and execute _transactions_ and _contracts_ compiled into EVM bytecode.
+[Ethereum](https://www.ethereum.org/) is a generic blockchain-based computing platform where nodes in a peer-to-peer network are maintaining the ledger.
+Nodes run the [_Ethereum Virtual Machine (EVM)_](https://ethereum.github.io/yellowpaper/paper.pdf) and execute _transactions_ and _contracts_ compiled into EVM bytecode.
 The main entities on the network are the _accounts_, identified by their 160-bit addresses.
 There are two kinds of accounts.
 - An _externally owned account_ is associated with a balance in Ether, the native cryptocurrency of Ethereum. It is typically owned by human users.
 - A _contract account_, in addition to its balance also stores the compiled contract bytecode and the data (state) associated with the contract.
 
-Contracts are usually written in a high-level language (such as Solidity) and then compiled into EVM bytecode.
+Contracts are usually written in a high-level language (such as [Solidity](https://solidity.readthedocs.io/en/latest/)) and then compiled into EVM bytecode.
 A compiled contract can be deployed to the blockchain by a special transaction.
 From that point on, users or other contracts can interact with the deployed contract by issuing _transactions_ to its address.
 The transaction contains the function to be called (with its parameters) and an execution fee called _gas_.
