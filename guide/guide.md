@@ -26,7 +26,7 @@ Each instruction costs some predefined amount of gas.
 If execution runs out of gas or there is a run time error, the whole transaction is reverted.
 Otherwise, successful transactions will be included in some of the next blocks as part of the mining process.
 
-For more information and details, you can read the [How does Ethereum work, anyway? article](https://medium.com/@preethikasireddy/how-does-ethereum-work-anyway-22d1df506369) or the [Ethereum yellow paper]((https://ethereum.github.io/yellowpaper/paper.pdf).
+For more information and details, you can read the [How does Ethereum work, anyway? article](https://medium.com/@preethikasireddy/how-does-ethereum-work-anyway-22d1df506369) or the [Ethereum yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf).
 
 ## Solidity basics
 
