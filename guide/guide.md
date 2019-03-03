@@ -26,6 +26,8 @@ Each instruction costs some predefined amount of gas.
 If execution runs out of gas or there is a run time error, the whole transaction is reverted.
 Otherwise, successful transactions will be included in some of the next blocks as part of the mining process.
 
+For more information and details, you can read the [How does Ethereum work, anyway? article](https://medium.com/@preethikasireddy/how-does-ethereum-work-anyway-22d1df506369) or the [Ethereum yellow paper]((https://ethereum.github.io/yellowpaper/paper.pdf).
+
 ## Solidity basics
 
 Solidity is a rapidly evolving language, but it has a well written and extensive [documentation](https://solidity.readthedocs.io/en/v0.5.0/).
@@ -183,12 +185,18 @@ These functions should be used with caution.
 ### Further reading
 
 Solidity supports some other language elements that were not discussed here, including [function modifiers](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#function-modifiers), [events](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#events), [inheritance](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#inheritance), [interfaces](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#interfaces) and [libraries](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#libraries).
-For more information, please refer to the documentation.
+For more information, please refer to the [documentation](https://solidity.readthedocs.io/en/v0.5.0/).
+
+Detailed tutorials are also available: [greeter](https://ethereum.org/greeter), [token](https://ethereum.org/token), [crowdsale](https://ethereum.org/crowdsale), [dao](https://ethereum.org/dao).
+Furthermore, [Ethernaut](https://ethernaut.zeppelin.solutions/) and [Cryptozombies](https://cryptozombies.io/) are interactive tutorials.
+
+For the latest news, read the [Ethereum blog](https://blog.ethereum.org/).
 
 While it may seem easy to develop Solidity code, it is also easy to make mistakes.
-Since the Ethereum blockchain is public anyone can exploit such bugs, causing serious financial damages (e.g., [reentrancy in the DAO](https://medium.com/swlh/the-story-of-the-dao-its-history-and-consequences-71e6a8a551ee) or [overflow in the BECToken](https://medium.com/@peckshield/alert-new-batchoverflow-bug-in-multiple-erc20-smart-contracts-cve-2018-10299-511067db6536)).
-Furthermore, the blockchain is permanent so buggy contract cannot be patched once deployed.
+Since the Ethereum blockchain is public, anyone can exploit such bugs, causing serious financial damages (e.g., [reentrancy in the DAO](https://medium.com/swlh/the-story-of-the-dao-its-history-and-consequences-71e6a8a551ee) or [overflow in the BECToken](https://medium.com/@peckshield/alert-new-batchoverflow-bug-in-multiple-erc20-smart-contracts-cve-2018-10299-511067db6536)).
+Furthermore, the blockchain is permanent so buggy contracts cannot be patched once deployed.
 It is therefore highly recommended to read about [security considerations](https://solidity.readthedocs.io/en/v0.5.0/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
+There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://securify.chainsecurity.com/), [Oyente](https://github.com/melonproject/oyente), [Maian](https://github.com/MAIAN-tool/MAIAN), [MythX](https://mythx.io/), [Slither](https://github.com/trailofbits/slither), [solc-verify](https://github.com/SRI-CSL/solidity/tree/boogie/) and [VeriSolid](https://github.com/VeriSolid/smart-contracts).
 
 ## Development and testing
 
