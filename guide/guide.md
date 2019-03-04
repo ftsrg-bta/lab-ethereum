@@ -130,6 +130,21 @@ Furthermore, instructions writing the blockchain state are more expensive to exe
 Functions can be marked as `public`, `internal`, `private` or `external` visibility.
 For more information, see the [visibility section of the documentation](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#visibility-and-getters).
 
+#### Constructor
+
+State variables are initialized to their default values (e.g., `0` for integer types or an empty mapping).
+However, an explicit [constructor](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#constructors) can be provided (including parameters) with the `constructor` keyword.
+For example, one could write a constructor for the SimpleBank example, which starts the transaction counter from a given parameter.
+
+```
+contract SimpleBank {
+    // ...
+    constructor(uint start) public {
+        transactions = start;
+    }
+}
+```
+
 ### Handling Ether
 
 Each [address](https://solidity.readthedocs.io/en/v0.5.0/units-and-global-variables.html#address-related) (contract or external) is associated with a balance in Ether.
