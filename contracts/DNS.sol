@@ -1,5 +1,7 @@
 pragma solidity ^0.5.0;
 
+// A domain name service contract, where users can register IP addresses
+// for domain names.
 contract DNS {
     struct Record {
         string ip;

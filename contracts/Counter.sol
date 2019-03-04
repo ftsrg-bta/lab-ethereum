@@ -1,5 +1,6 @@
 pragma solidity ^0.5.0;
 
+// A simple counter, which can only be increased by its owner.
 contract Counter {
 
     address owner;

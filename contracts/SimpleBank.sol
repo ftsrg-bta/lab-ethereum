@@ -1,5 +1,7 @@
 pragma solidity ^0.5.0;
 
+// A simple bank, where users can deposit and withdraw money (Ether)
+// to/from their balance. The number of transactions is also counted.
 contract SimpleBank {
     uint public transactions;
     mapping(address=>uint) balances;

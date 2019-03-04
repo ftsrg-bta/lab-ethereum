@@ -17,6 +17,7 @@ contract Mortal {
     }
 }
 
+// Hello world example, storing a message that can be queried.
 contract Greeter is Mortal {
     string message;
     
