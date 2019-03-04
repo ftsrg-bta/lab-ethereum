@@ -1,0 +1,1 @@
+pandoc.exe guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.pdf -V geometry:margin=1in -V urlcolor:blue

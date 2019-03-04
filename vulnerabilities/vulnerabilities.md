@@ -1,8 +1,7 @@
 ---
 title: Solidity/Ethereum vulnerabilities
+author: Ákos Hajdu
 ---
-
-_Ákos Hajdu_
 
 This is a supplementary material for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [
 Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
