@@ -1,1 +1,0 @@
-pandoc.exe guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.html --css=pandoc.css --standalone --self-contained

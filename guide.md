@@ -221,6 +221,7 @@ Alternatively, [Remix](remix.ethereum.org) can also be used, which is a web-base
 In order to deploy a contract to a real network one also needs a wallet such as [Metamask](metamask.io) or [Mist](github.com/ethereum/mist).
 For more complex contracts and scenarios, one should also consider the [Truffle Suite](truffleframework.com), providing various development tools.
 In the following, we cover the basics of [Remix](remix.ethereum.org).
+For more information, please refer to the [documentation of Remix](https://remix.readthedocs.io/en/latest/).
 
 ### Writing a contract
 

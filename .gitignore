@@ -1,3 +1,2 @@
-guide/guide.html
-guide/guide.pdf
-vulnerabilities/vulnerabilities.pdf
+*.html
+*.pdf
