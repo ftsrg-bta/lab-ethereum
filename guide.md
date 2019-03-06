@@ -22,7 +22,7 @@ The transaction contains the function to be called (with its parameters) and an 
 Optionally, some value of Ether can also be associated with the call.
 The nodes then execute the transaction by running the contract code.
 Each instruction costs some predefined amount of gas.
-If execution runs out of gas or there is a run time error, the whole transaction is reverted.
+If execution runs out of gas or there is a runtime error, the whole transaction is reverted.
 Otherwise, successful transactions will be included in some of the next blocks as part of the mining process.
 
 For more information and details, you can read the [How does Ethereum work, anyway? article](https://medium.com/@preethikasireddy/how-does-ethereum-work-anyway-22d1df506369) or the [Ethereum yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf).
@@ -101,6 +101,7 @@ State variable [visibility](https://solidity.readthedocs.io/en/v0.5.0/contracts.
 However, there are a few remarkable differences.
 - For public variables, only a getter function is generated automatically. They cannot be directly written by other contracts or transactions.
 - Although private (and internal) variables cannot be accessed and modified by other contracts, transactions on the blockchain are public, so the information stored in such variables is still visible to anyone. Never store passwords or other secret information on the blockchain.
+- If no visibility is specified, `internal` is the default.
 
 ### Functions
 
@@ -126,8 +127,17 @@ Besides the basic statements illustrated by the SimpleBank example, functions ca
 However, as execution costs a transaction fee per instruction (gas), it is recommended to avoid complex operations like loops when possible.
 Furthermore, instructions writing the blockchain state are more expensive to execute, therefore it is also recommended to minimize the number of writes.
 
-Functions can be marked as `public`, `internal`, `private` or `external` visibility.
+As already mentioned in the example, functions can access a special `msg` field, which stores information about the function call.
+Besides `msg`, functions can also access some other special variables and functions, including for example the parameters of the current transaction and block, the current timestamp or the remaining gas.
+For more information, see the [documentation](https://solidity.readthedocs.io/en/v0.5.0/units-and-global-variables.html#special-variables-and-functions).
+However, use these special variables and functions with caution as they may introduce vulnerabilities to your contract.
+For example, `tx.origin` [should never be used for authorization](https://solidity.readthedocs.io/en/v0.5.0/security-considerations.html#tx-origin), use `msg.sender` instead.
+
+
+Functions must be marked with a `public`, `internal`, `private` or `external` visibility.
 For more information, see the [visibility section of the documentation](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#visibility-and-getters).
+In previous versions of Solidity, if a function did not specify a visibility it was public by default.
+However, this lead to vulnerabilities and in the current version the visibility must be specified.
 
 #### Constructor
 
@@ -246,7 +256,11 @@ For a simple local test, select the _Run_ tab on the top right.
 The default _environment_ is JavaScript VM, which runs an Ethereum Virtual Machine (EVM) locally (i.e., it does not connect to the real network).
 This makes testing quick and free.
 Remix also supports connecting to a real network by selecting the Web3 option as an environment (which requires a wallet first).
-For the purpose of this tutorial we will be simply working with the local JavaScrip VM environment.
+Besides the main network, there are also some test networks ([Ropsten](https://ropsten.etherscan.io/), [RinkeBy](https://www.rinkeby.io), [Kovan](https://kovan.etherscan.io/)).
+These networks are somewhat similar to the main network as there are multiple nodes and miners.
+However, the Ether on these networks has no real value: you can also request some free Ether to test your contracts.
+
+For the purpose of this tutorial we will be simply working with the local JavaScript VM environment.
 Remix also creates some test _accounts_ by default with 100 Ether each.
 The account currently selected is used as the sender when you issue transactions.
 You can specify the _gas limit_ and you can also attach ether to the call with the _value_ field.
