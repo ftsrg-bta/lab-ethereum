@@ -78,9 +78,7 @@ The SimpleBank example defines two state variables.
 - `transactions` is an unsigned integer (`uint`), storing the number of transactions in the current bank instance. It is incremented when users deposit or withdraw.
 - `balances` is a _mapping_ from addresses to integers, storing the current balance of each user. Mappings work similarly to maps in Java/C++ or dictionaries in C#/Python.
 
-#### Types
-
-Solidity is a strongly-typed language, i.e., the type of each variable must be explicitly specified.
+**Types.** Solidity is a strongly-typed language, i.e., the type of each variable must be explicitly specified.
 Solidity offers various [_primitive types_](https://solidity.readthedocs.io/en/v0.5.0/types.html#value-types), including:
 - Booleans (true/false).
 - Signed and unsigned integers of various bit-lengths: `int8`, `int16`, `int24`, ..., `int256` are signed and `uint8`, `uint16`, `uint24`, ..., `uint256` are unsigned integers with 8, 16, 24, ..., 256 bits. The default `int` and `uint` types correspond to `int256` and `uint256` respectively.
@@ -94,9 +92,7 @@ Solidity also provides [_reference types_](https://solidity.readthedocs.io/en/v0
 These types work in a similar way as in other programming languages.
 For more information on types, see [types section of the documentation](https://solidity.readthedocs.io/en/v0.5.0/types.html).
 
-#### Visibilities
-
-State variable [visibility](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#visibility-and-getters) can be `private`, `internal` or `public`, which are similar to other programming languages.
+**Visibility.** State variable [visibility](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#visibility-and-getters) can be `private`, `internal` or `public`, which are similar to other programming languages.
 However, there are a few remarkable differences.
 - For public variables, only a getter function is generated automatically. They cannot be directly written by other contracts or transactions.
 - Although private (and internal) variables cannot be accessed and modified by other contracts, transactions on the blockchain are public, so the information stored in such variables is still visible to anyone. Never store passwords or other secret information on the blockchain.
@@ -126,21 +122,18 @@ Besides the basic statements illustrated by the SimpleBank example, functions ca
 However, as execution costs a transaction fee per instruction (gas), it is recommended to avoid complex operations like loops when possible.
 Furthermore, instructions writing the blockchain state are more expensive to execute, therefore it is also recommended to minimize the number of writes.
 
-As already mentioned in the example, functions can access a special `msg` field, which stores information about the function call.
+**Special variables and functions.** As already mentioned in the example, functions can access a special `msg` field, which stores information about the function call.
 Besides `msg`, functions can also access some other special variables and functions, including for example the parameters of the current transaction and block, the current timestamp or the remaining gas.
 For more information, see the [documentation](https://solidity.readthedocs.io/en/v0.5.0/units-and-global-variables.html#special-variables-and-functions).
 However, use these special variables and functions with caution as they may introduce vulnerabilities to your contract.
 For example, `tx.origin` [should never be used for authorization](https://solidity.readthedocs.io/en/v0.5.0/security-considerations.html#tx-origin), use `msg.sender` instead.
 
-
-Functions must be marked with a `public`, `internal`, `private` or `external` visibility.
+**Visibility.** Functions must be marked with a `public`, `internal`, `private` or `external` visibility.
 For more information, see the [visibility section of the documentation](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#visibility-and-getters).
 In previous versions of Solidity, if a function did not specify a visibility it was public by default.
 However, this lead to vulnerabilities and in the current version the visibility must be specified.
 
-#### Constructor
-
-State variables are initialized to their default values (e.g., `0` for integer types or an empty mapping).
+**Constructor.** State variables are initialized to their default values (e.g., `0` for integer types or an empty mapping).
 However, an explicit [constructor](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#constructors) can be provided (including parameters) with the `constructor` keyword.
 For example, one could write a constructor for the SimpleBank example, which starts the transaction counter from a given parameter.
 
