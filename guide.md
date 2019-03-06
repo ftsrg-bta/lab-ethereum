@@ -3,8 +3,7 @@ title: Solidity/Ethereum development quick guide
 author: Ákos Hajdu, Imre Kocsis, Péter Garamvölgyi
 ---
 
-This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [
-Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
+This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
 
 ## Ethereum basics
 
@@ -225,12 +224,12 @@ There is also a handful of tools targeting the verification of contracts, includ
 ## Development and testing
 
 As with other programming languages, development requires some tools.
-[Visual Studio Code](code.visualstudio.com) has a Solidity extension to edit Solidity contracts.
+[Visual Studio Code](http://code.visualstudio.com) has a Solidity extension to edit Solidity contracts.
 The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.0/installing-solidity.html), which can translate the contract into EVM bytecode.
-Alternatively, [Remix](remix.ethereum.org) can also be used, which is a web-based IDE supporting editing, compiling and testing.
-In order to deploy a contract to a real network one also needs a wallet such as [Metamask](metamask.io) or [Mist](github.com/ethereum/mist).
-For more complex contracts and scenarios, one should also consider the [Truffle Suite](truffleframework.com), providing various development tools.
-In the following, we cover the basics of [Remix](remix.ethereum.org).
+Alternatively, [Remix](http://remix.ethereum.org) can also be used, which is a web-based IDE supporting editing, compiling and testing.
+In order to deploy a contract to a real network one also needs a wallet such as [Metamask](http://metamask.io) or [Mist](http://github.com/ethereum/mist).
+For more complex contracts and scenarios, one should also consider the [Truffle Suite](http://truffleframework.com), providing various development tools.
+In the following, we cover the basics of [Remix](http://remix.ethereum.org).
 For more information, please refer to the [documentation of Remix](https://remix.readthedocs.io/en/latest/).
 
 ### Writing a contract
