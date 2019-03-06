@@ -22,20 +22,20 @@ body {
 }
 
 a {
-  color: #0645ad;
+  color: rgb(3, 102, 214);
   text-decoration: none;
 }
 
 a:visited {
-  color: #0b0080;
+  color: rgb(3, 102, 214);
 }
 
 a:hover {
-  color: #06e;
+  text-decoration: underline;
 }
 
 a:active {
-  color: #faa700;
+  text-decoration: underline;
 }
 
 a:focus {
