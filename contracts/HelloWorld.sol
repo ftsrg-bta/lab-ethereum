@@ -1,24 +1,7 @@
 pragma solidity ^0.5.0;
 
-contract Mortal {
-    address payable owner;
-    
-    modifier onlyOwner {
-        require(msg.sender == owner);
-        _;
-    }
-    
-    constructor() public {
-        owner = msg.sender;
-    }
-    
-    function kill() public onlyOwner {
-        selfdestruct(owner);
-    }
-}
-
 // Hello world example, storing a message that can be queried.
-contract Greeter is Mortal {
+contract Greeter {
     string message;
     
     constructor(string memory _message) public {

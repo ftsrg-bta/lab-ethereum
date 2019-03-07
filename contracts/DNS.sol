@@ -9,32 +9,40 @@ contract DNS {
     }
     
     mapping(string=>Record) records;
-    uint constant price = 0.01 ether;
+    uint public price = 0.01 ether;
     address payable owner;
+    
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
     
     constructor() public {
         owner = msg.sender;
     }
     
+    function setPrice(uint newPrice) public onlyOwner {
+        price = newPrice;
+    }
+    
     function register(string memory domain, string memory ip) public payable {
+        require(msg.value >= price);
         require(records[domain].owner == address(0x0) ||
                 records[domain].owner == msg.sender);
-        require(msg.value >= price);
         
-        records[domain] = Record(ip, msg.sender);
+        records[domain] = Record(ip, msg.sender);        
     }
     
     function lookup(string memory domain) public view returns (string memory) {
         return records[domain].ip;
     }
     
-    function transfer(string memory domain, address newowner) public {
+    function transfer(string memory domain, address newOwner) public {
         require(records[domain].owner == msg.sender);
-        records[domain].owner = newowner;
+        records[domain].owner = newOwner;
     }
     
-    function withdraw() public {
-        require(msg.sender == owner);
+    function withdraw() public onlyOwner {
         owner.transfer(address(this).balance);
     }
 }
