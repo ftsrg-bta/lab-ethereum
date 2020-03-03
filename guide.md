@@ -28,8 +28,8 @@ For more information and details, you can read the [How does Ethereum work, anyw
 
 ## Solidity basics
 
-Solidity is a rapidly evolving language, but it has a well written and extensive [documentation](https://solidity.readthedocs.io/en/v0.5.0/).
-The current guide is based on version 0.5.0 (released on November 13, 2018), but the latest documentation is available at [solidity.readthedocs.io/en/latest](https://solidity.readthedocs.io/en/latest/).
+Solidity is a rapidly evolving language, but it has a well written and extensive [documentation](https://solidity.readthedocs.io/en/v0.5.15/).
+The current guide is based on version 0.5.15 (released on December 17, 2019), but the latest documentation is available at [solidity.readthedocs.io/en/latest](https://solidity.readthedocs.io/en/latest/).
 
 ### Layout of source files
 
@@ -37,17 +37,17 @@ An example Solidity smart contract can be seen below.
 The contract implements a simple bank, where users can deposit and withdraw money (Ether).
 Furthermore, the bank also counts the number of transactions.
 
-Source files start with a [_pragma_](https://solidity.readthedocs.io/en/v0.5.0/layout-of-source-files.html#pragmas) statement describing the _compiler version_ to use.
+Source files start with a [_pragma_](https://solidity.readthedocs.io/en/v0.5.15/layout-of-source-files.html#pragmas) statement describing the _compiler version_ to use.
 A source file can then define multiple _contracts_.
 The example below has a single contract named `SimpleBank`.
 At a first glance, smart contracts are similar to simple classes in object-oriented programming. Contracts can define
-- [_state variables_](https://solidity.readthedocs.io/en/v0.5.0/structure-of-a-contract.html#state-variables), which define the data stored on the blockchain and
-- [_functions_](https://solidity.readthedocs.io/en/v0.5.0/structure-of-a-contract.html#functions) that can manipulate the data and interact with other accounts.
+- [_state variables_](https://solidity.readthedocs.io/en/v0.5.15/structure-of-a-contract.html#state-variables), which define the data stored on the blockchain and
+- [_functions_](https://solidity.readthedocs.io/en/v0.5.15/structure-of-a-contract.html#functions) that can manipulate the data and interact with other accounts.
 
 
-It is also possible to [_import_](https://solidity.readthedocs.io/en/v0.5.0/layout-of-source-files.html#importing-other-source-files) other contracts from other source files and Solidity also supports [_inheritance_](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#inheritance) between contracts.
+It is also possible to [_import_](https://solidity.readthedocs.io/en/v0.5.15/layout-of-source-files.html#importing-other-source-files) other contracts from other source files and Solidity also supports [_inheritance_](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#inheritance) between contracts.
 
-```
+```solidity
 pragma solidity ^0.5.0;
 
 contract SimpleBank {
@@ -79,28 +79,30 @@ The SimpleBank example defines two state variables.
 - `balances` is a _mapping_ from addresses to integers, storing the current balance of each user. Mappings work similarly to maps in Java/C++ or dictionaries in C#/Python.
 
 **Types.** Solidity is a strongly-typed language, i.e., the type of each variable must be explicitly specified.
-Solidity offers various [_primitive types_](https://solidity.readthedocs.io/en/v0.5.0/types.html#value-types), including:
+Solidity offers various [_value types_](https://solidity.readthedocs.io/en/v0.5.15/types.html#value-types), including:
 - Booleans (true/false).
 - Signed and unsigned integers of various bit-lengths: `int8`, `int16`, `int24`, ..., `int256` are signed and `uint8`, `uint16`, `uint24`, ..., `uint256` are unsigned integers with 8, 16, 24, ..., 256 bits. The default `int` and `uint` types correspond to `int256` and `uint256` respectively.
 - Addresses (`address`) are 160-bit integers corresponding to Ethereum addresses.
 
-Solidity also provides [_reference types_](https://solidity.readthedocs.io/en/v0.5.0/types.html#reference-types), including:
+Solidity also provides [_reference types_](https://solidity.readthedocs.io/en/v0.5.15/types.html#reference-types), including:
 - Arrays (with fixed or dynamic size).
 - Structures (`struct`).
 - Mappings (`mapping(...=>...)`).
 
-These types work in a similar way as in other programming languages.
-For more information on types, see [types section of the documentation](https://solidity.readthedocs.io/en/v0.5.0/types.html).
+These types work mostly in a similar way as in other programming languages.
+However, such types can reside in different [data locations](https://solidity.readthedocs.io/en/v0.5.15/types.html#data-location), such as the permanent contract `storage` (stored on the blockchain) or in a transient `memory` (during executing a transaction).
+The behavior of allocations and assignments can be different for these data locations (e.g., assignments between storage entities do a deep copy, while in memory it is just reference assignment) so pay special attention.
+For more information on types, see the [types section of the documentation](https://solidity.readthedocs.io/en/v0.5.15/types.html) or the [article formalizing the memory model](https://arxiv.org/pdf/2001.03256.pdf).
 
-**Visibility.** State variable [visibility](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#visibility-and-getters) can be `private`, `internal` or `public`, which are similar to other programming languages.
+**Visibility.** State variable [visibility](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#visibility-and-getters) can be `private`, `internal` or `public`, which are similar to other programming languages.
 However, there are a few remarkable differences.
 - For public variables, only a getter function is generated automatically. They cannot be directly written by other contracts or transactions.
-- Although private (and internal) variables cannot be accessed and modified by other contracts, transactions on the blockchain are public, so the information stored in such variables is still visible to anyone. Never store passwords or other secret information on the blockchain.
+- Although private (and internal) variables cannot be accessed and modified by other contracts, transactions on the blockchain are public, so the information stored in such variables is still visible to anyone. Never store passwords or other secret information directly in state variables.
 - If no visibility is specified, `internal` is the default.
 
 ### Functions
 
-[Functions](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#functions) in Solidity can read and manipulate the state variables and interact with other contracts and accounts.
+[Functions](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#functions) in Solidity can read and manipulate the state variables and interact with other contracts and accounts.
 Functions can have parameters (e.g., `withdraw` in the example has one parameter) and can return values (e.g., `getBalance` returns one).
 The SimpleBank example specifies three functions.
 - The `deposit` function is `public` (can be called by anyone) and `payable`, which means that it can receive Ether as part of the call.
@@ -118,26 +120,26 @@ The `require` statement checks the condition and reverts the whole transaction i
 Otherwise it updates the mapping by decreasing the balance of the caller and then transfers the required amount using the `transfer` function.
 Finally, the function increments the `transactions` counter.
 
-Besides the basic statements illustrated by the SimpleBank example, functions can have [other statements](https://solidity.readthedocs.io/en/v0.5.0/control-structures.html) such as selection (`if else`) or loops (`for`, `while`).
+Besides the basic statements illustrated by the SimpleBank example, functions can have [other statements](https://solidity.readthedocs.io/en/v0.5.15/control-structures.html) such as selection (`if else`) or loops (`for`, `while`).
 However, as execution costs a transaction fee per instruction (gas), it is recommended to avoid complex operations like loops when possible.
 Furthermore, instructions writing the blockchain state are more expensive to execute, therefore it is also recommended to minimize the number of writes.
 
 **Special variables and functions.** As already mentioned in the example, functions can access a special `msg` field, which stores information about the function call.
-Besides `msg`, functions can also access some other special variables and functions, including for example the parameters of the current transaction and block, the current timestamp or the remaining gas.
-For more information, see the [documentation](https://solidity.readthedocs.io/en/v0.5.0/units-and-global-variables.html#special-variables-and-functions).
-However, use these special variables and functions with caution as they may introduce vulnerabilities to your contract.
-For example, `tx.origin` [should never be used for authorization](https://solidity.readthedocs.io/en/v0.5.0/security-considerations.html#tx-origin), use `msg.sender` instead.
+Besides `msg`, functions can also access some other special variables and functions, including for example the parameters of the current transaction (`tx`) and block (`block`), the current timestamp (`now`) or the remaining gas (`gasleft()`).
+For more information, see the [special variables and functions section of the documentation](https://solidity.readthedocs.io/en/v0.5.15/units-and-global-variables.html#special-variables-and-functions).
+Use these special variables and functions with caution as they may introduce vulnerabilities to your contract.
+For example, `tx.origin` [should never be used for authorization](https://solidity.readthedocs.io/en/v0.5.15/security-considerations.html#tx-origin), use `msg.sender` instead.
 
 **Visibility.** Functions must be marked with a `public`, `internal`, `private` or `external` visibility.
-For more information, see the [visibility section of the documentation](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#visibility-and-getters).
+For more information, see the [visibility section of the documentation](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#visibility-and-getters).
 In previous versions of Solidity, if a function did not specify a visibility it was public by default.
 However, this lead to vulnerabilities and in the current version the visibility must be specified.
 
 **Constructor.** State variables are initialized to their default values (e.g., `0` for integer types or an empty mapping).
-However, an explicit [constructor](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#constructors) can be provided (including parameters) with the `constructor` keyword.
+However, an explicit [constructor](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#constructors) (at most one) can be provided (including parameters) with the `constructor` keyword.
 For example, one could write a constructor for the SimpleBank example, which starts the transaction counter from a given parameter.
 
-```
+```solidity
 contract SimpleBank {
     // ...
     constructor(uint start) public {
@@ -148,11 +150,11 @@ contract SimpleBank {
 
 ### Handling Ether
 
-Each [address](https://solidity.readthedocs.io/en/v0.5.0/units-and-global-variables.html#address-related) (contract or external) is associated with a balance in Ether.
+Each [address](https://solidity.readthedocs.io/en/v0.5.15/units-and-global-variables.html#address-related) (contract or external) is associated with a balance in Ether.
 Solidity provides various language features to query balances and transfer Ether.
 The `address` type has a field `balance` which can query the balance.
 For example, to query the balance of the current contract inside a function we can use `address(this).balance`:
-```
+```solidity
 function getContractBalance() public returns (uint) {
     return address(this).balance;
 }
@@ -170,12 +172,12 @@ The Ether attached is automatically added to the balance of the contract, but ca
 When a contract wants to call another contract and send Ether, it can set the amount with the `value` function.
 For example, if we have a `SimpleBank sb` field in another contract, we can call `sb.deposit.value(amount)()` to deposit a given amount.
 
-Each contract can have at most one function _without a name_, which is called the [_fallback function_](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#fallback-function).
+Each contract can have at most one function _without a name_, which is called the [_fallback function_](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#fallback-function).
 This function gets executed when a call to the contract matches no other function.
 Furthermore it is also executed when `transfer` or `send` is used to transfer Ether to a contract.
 However, this requires the fallback function to be marked as `payable`.
 An example fallback function can be seen below.
-```
+```solidity
 function () public payable {
     // Do something
 }
@@ -189,7 +191,7 @@ For example, `uint amount = 1 ether;` will store `10^18` in the variable `amount
 
 Transactions in Ethereum work in an atomic way: if there is an error, the whole transaction gets reverted.
 Errors can happen due to some condition in the execution, such as running out of the execution fee or indexing an array out of bounds.
-However, there are multiple ways for the programmer to [raise an error](https://solidity.readthedocs.io/en/v0.5.0/control-structures.html#error-handling-assert-require-revert-and-exceptions).
+However, there are multiple ways for the programmer to [raise an error](https://solidity.readthedocs.io/en/v0.5.15/control-structures.html#error-handling-assert-require-revert-and-exceptions).
 - `require(...)` checks if a condition holds and if not, it reverts the transaction. It is recommended to be used for example to validate parameters at the beginning of the function.
 - `assert(...)` is similar to `require` in its effect, but it is recommended to use for checking conditions that should not fail. Proper code should never reach an assertion failure. In contrast, it is normal for `require` to raise an error.
 - `revert()` simply reverts the transaction.
@@ -200,10 +202,11 @@ These functions should be used with caution.
 
 ### Further reading
 
-Solidity supports some other language elements that were not discussed here, including [function modifiers](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#function-modifiers), [events](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#events), [inheritance](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#inheritance), [interfaces](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#interfaces) and [libraries](https://solidity.readthedocs.io/en/v0.5.0/contracts.html#libraries).
-For more information, please refer to the [documentation](https://solidity.readthedocs.io/en/v0.5.0/).
+Solidity supports some other language elements that were not discussed here, including [function modifiers](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#function-modifiers), [events](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#events), [inheritance](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#inheritance), [interfaces](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#interfaces) and [libraries](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#libraries).
+Solidity 0.6.0 also introduced exception handling using [try/catch](https://solidity.readthedocs.io/en/v0.6.0/control-structures.html#try-catch).
+For more information, please refer to the [documentation](https://solidity.readthedocs.io/en/v0.5.15/).
 
-Detailed tutorials are also available: [greeter](https://ethereum.org/greeter), [token](https://ethereum.org/token), [crowdsale](https://ethereum.org/crowdsale), [dao](https://ethereum.org/dao).
+Detailed tutorials are also available: [greeter](https://ethereum.gitbooks.io/frontier-guide/contract_greeter.html), [token](https://ethereum.gitbooks.io/frontier-guide/contract_coin.html), [crowdsale](https://ethereum.gitbooks.io/frontier-guide/contract_crowdfunder.html), [dao](https://ethereum.gitbooks.io/frontier-guide/contract_democracy.html).
 Furthermore, [Ethernaut](https://ethernaut.zeppelin.solutions/) and [Cryptozombies](https://cryptozombies.io/) are interactive tutorials.
 
 For the latest news, read the [Ethereum blog](https://blog.ethereum.org/).
@@ -211,23 +214,23 @@ For the latest news, read the [Ethereum blog](https://blog.ethereum.org/).
 While it may seem easy to develop Solidity code, it is also easy to make mistakes.
 Since the Ethereum blockchain is public, anyone can exploit such bugs, causing serious financial damages (e.g., [reentrancy in the DAO](https://medium.com/swlh/the-story-of-the-dao-its-history-and-consequences-71e6a8a551ee) or [overflow in the BECToken](https://medium.com/@peckshield/alert-new-batchoverflow-bug-in-multiple-erc20-smart-contracts-cve-2018-10299-511067db6536)).
 Furthermore, the blockchain is permanent so buggy contracts cannot be patched once deployed.
-It is therefore highly recommended to read about [security considerations](https://solidity.readthedocs.io/en/v0.5.0/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
-There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://securify.chainsecurity.com/), [Oyente](https://github.com/melonproject/oyente), [Maian](https://github.com/MAIAN-tool/MAIAN), [MythX](https://mythx.io/), [Slither](https://github.com/trailofbits/slither), [solc-verify](https://github.com/SRI-CSL/solidity/tree/boogie/) and [VeriSolid](https://github.com/VeriSolid/smart-contracts).
+It is therefore highly recommended to read about [security considerations](https://solidity.readthedocs.io/en/v0.5.15/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
+There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://securify.chainsecurity.com/), [MythX](https://mythx.io/), [Slither](https://github.com/crytic/slither), [solc-verify](https://github.com/SRI-CSL/solidity/), [VerX](https://verx.ch/) and [VeriSolid](https://github.com/VeriSolid/smart-contracts).
 
 ## Development and testing
 
 As with other programming languages, development requires some tools.
 [Visual Studio Code](http://code.visualstudio.com) has a Solidity extension to edit Solidity contracts.
-The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.0/installing-solidity.html), which can translate the contract into EVM bytecode.
+The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.15/installing-solidity.html), which can translate the contract into EVM bytecode.
 Alternatively, [Remix](http://remix.ethereum.org) can also be used, which is a web-based IDE supporting editing, compiling and testing.
-In order to deploy a contract to a real network one also needs a wallet such as [Metamask](http://metamask.io) or [Mist](http://github.com/ethereum/mist).
+In order to deploy a contract to a real network one also needs a wallet such as [Metamask](https://github.com/MetaMask).
 For more complex contracts and scenarios, one should also consider the [Truffle Suite](http://truffleframework.com), providing various development tools.
 In the following, we cover the basics of [Remix](http://remix.ethereum.org).
-For more information, please refer to the [documentation of Remix](https://remix.readthedocs.io/en/latest/).
+For more information, please refer to the [documentation of Remix](https://remix-ide.readthedocs.io/en/latest/).
 
 ### Writing a contract
 
-You can create or import files in Remix with the icons on the top left.
+You can create or import files in Remix with the icons on the top left (file explorers).
 As an example, create a new file named `SimpleBank.sol` and copy the code from the SimpleBank example above.
 Remix supports syntax highlighting and auto completion as well.
 
@@ -235,16 +238,17 @@ Remix supports syntax highlighting and auto completion as well.
 
 ### Compiling a contract
 
-The contract can be compiled by selecting the _Compile_ tab on the top right.
+In order to compile a contract, the compiler plug-in has to be activated by clicking on the plug-in icon on the left sidebar and finding the _Solidity compiler_ plugin.
+A new icon for the compiler should appear in the left sidebar which activates the compiler tab.
+You can select a compiler version and click _Compile_ or you can also turn on the _Auto compile_ option.
+On a successful compilation, the contract name will appear below the compiler configuration.
 
 ![Compiling in Remix](img/remix-compiler.png)
 
-You can select a compiler version and click _Start to compile_ or you can also turn on the _Auto compile_ option.
-On a successful compilation, you will receive a green message with the name of the contract.
 
 ### Testing a contract
 
-For a simple local test, select the _Run_ tab on the top right.
+For a simple local test, activate the _Deploy & run transactions_ plug-in.
 The default _environment_ is JavaScript VM, which runs an Ethereum Virtual Machine (EVM) locally (i.e., it does not connect to the real network).
 This makes testing quick and free.
 Remix also supports connecting to a real network by selecting the Web3 option as an environment (which requires a wallet first).
@@ -265,17 +269,17 @@ The contract should appear below in the list of deployed contracts.
 You can also see that the balance of the selected account decreased a bit.
 This is because deploying a contract is a special transaction that also costs execution fee (gas).
 
-If you click on a deployed contract, its public interface appears.
+If you click on the small arrow on the left of a deployed contract, its public interface appears.
 Our example, `SimpleBank` has 4 functions.
-You can see that `view` functions are marked with a different color.
-These do not result in transactions and therefore have no execution fee.
+You can see that `payable` and `view` functions are marked with a different color.
+View functions do not result in transactions and therefore have no execution fee.
 Click on a function to execute it.
 If a function has parameters (such as `withdraw`), you can specify its parameters in the textboxes next to the name of the function.
 After executing the function, the return value (if any) appears below.
 
 ![The deployed contract in Remix](img/remix-deployed.png)
 
-You can also inspect the details of the transactions in the middle below the editor.
+You can also inspect the details of the transactions at the bottom (below the editor).
 For example, you can see the deployment transaction below.
 
 ![Details of a transaction in Remix](img/remix-details.png)
@@ -285,7 +289,8 @@ For example, you can set the _value_ to 10 Ether and call `deposit`.
 Then `getBalance` should return 10000000000000000000 (Wei).
 Calling `transactions` should return 1.
 If you switch to a different account and call `getBalance` you should see 0.
-If you try to withdraw, the transaction should fail due to the `require`.
-Switching back to the previous account, `deposit` should work (for no more than 10 Ether).
+If you try to `withdraw`, the transaction should fail due to the `require`.
+Switching back to the previous account, `withdraw` should work (for no more than 10 Ether).
 
 If you make modifications to the contract, don't forget to compile and deploy again!
+You can also take a look at other plug-ins, such as the _Solidity static analysis_, the _Solidity unit testing_ or the _Debugger_.
