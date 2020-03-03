@@ -1,6 +1,7 @@
 ---
 title: Solidity/Ethereum development quick guide
 author: Ákos Hajdu, Imre Kocsis, Péter Garamvölgyi
+date: 2020.03.03
 ---
 
 This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).

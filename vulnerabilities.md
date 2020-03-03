@@ -1,6 +1,7 @@
 ---
 title: Solidity/Ethereum vulnerabilities
 author: Ákos Hajdu
+date: 2020.03.03
 ---
 
 This is a supplementary material for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
@@ -43,6 +44,12 @@ You can refer to them for more details and examples.
 - [Atzei, Bartoletti, Cimoli - A survey of attacks on Ethereum smart contracts (2017)](https://eprint.iacr.org/2016/1007.pdf)
 - [Luu, Chu, Olickel, Saxena, Hobor - Making Smart Contracts Smarter (2016)](https://eprint.iacr.org/2016/633.pdf)
 - [Nikolic, Kolluri, Sergey, Saxena, Hobor - Finding The Greedy, Prodigal, and Suicidal Contracts at Scale (2018)](https://arxiv.org/pdf/1802.06038.pdf)
+
+Some further papers:
+- [Alkhalifah, Ng, Kayes, Chowdhury, Alazab, Watters - A Taxonomy of Blockchain Threats and Vulnerabilities (2019)](https://www.preprints.org/manuscript/201909.0117/v1/download)
+- [Praitheeshan, Pan, Yu, Liu, Doss - Security Analysis Methods on Ethereum Smart Contract Vulnerabilities: A Survey (2019)](https://arxiv.org/pdf/1908.08605)
+- [Chen, Pendleton, Njilla, Xu - A Survey on Ethereum Systems Security: Vulnerabilities, Attacks and Defenses (2019)](https://arxiv.org/pdf/1908.04507)
+- [Hajdu, Jovanović - solc-verify: A Modular Verifier for Solidity Smart Contracts (2019)](https://arxiv.org/pdf/1907.04262.pdf)
 
 It is also highly recommended to read about [security considerations](https://solidity.readthedocs.io/en/v0.5.0/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
 There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://securify.chainsecurity.com/), [MythX](https://mythx.io/), [Slither](https://github.com/crytic/slither), [solc-verify](https://github.com/SRI-CSL/solidity/), [VerX](https://verx.ch/) and [VeriSolid](https://github.com/VeriSolid/smart-contracts).
