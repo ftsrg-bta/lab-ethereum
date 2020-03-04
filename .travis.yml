@@ -9,9 +9,9 @@ script:
 - wget https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
 - sudo dpkg -i pandoc-1.19.2.1-1-amd64.deb
 - pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.html --css=pandoc.css --standalone --self-contained
-- pandoc vulnerabilities.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=vulnerabilities.html --css=pandoc.css --standalone
+- pandoc vulnerabilities.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=vulnerabilities.html --css=pandoc.css --standalone --self-contained
 - pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.pdf -V geometry:margin=1in -V urlcolor:blue
-- pandoc vulnerabilities.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=vulnerabilities.pdf -V geometry:margin=1in -V urlcolor:blue--self-contained
+- pandoc vulnerabilities.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=vulnerabilities.pdf -V geometry:margin=1in -V urlcolor:blue
 - mkdir out
 - cp *.html out/
 notifications:
