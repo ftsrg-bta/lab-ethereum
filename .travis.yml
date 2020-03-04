@@ -1,0 +1,24 @@
+language: shell
+os: linux
+
+script:
+- sudo apt-get update -qq
+- sudo apt-get install -qq -y texlive-base texlive-science texlive-xetex texlive-fonts-recommended
+  texlive-latex-extra
+- wget https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
+- sudo dpkg -i pandoc-1.19.2.1-1-amd64.deb
+- pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.html --css=pandoc.css --standalone --self-contained
+- pandoc vulnerabilities.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=vulnerabilities.html --css=pandoc.css --standalone --self-contained
+- mkdir out
+- cp *.html out/
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: out
+  token: $GITHUB_TOKEN
+  on:
+    branch: master
