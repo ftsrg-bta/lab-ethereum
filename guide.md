@@ -1,7 +1,7 @@
 ---
 title: Solidity/Ethereum development quick guide
 author: Ákos Hajdu, Imre Kocsis, Péter Garamvölgyi
-date: 2020.03.03
+date: 2020.03.04
 ---
 
 This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
@@ -218,7 +218,7 @@ Furthermore, the blockchain is permanent so buggy contracts cannot be patched on
 It is therefore highly recommended to read about [security considerations](https://solidity.readthedocs.io/en/v0.5.15/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
 There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://securify.chainsecurity.com/), [MythX](https://mythx.io/), [Slither](https://github.com/crytic/slither), [solc-verify](https://github.com/SRI-CSL/solidity/), [VerX](https://verx.ch/) and [VeriSolid](https://github.com/VeriSolid/smart-contracts).
 
-## Development and testing
+## Development and testing online with Remix
 
 As with other programming languages, development requires some tools.
 [Visual Studio Code](http://code.visualstudio.com) has a Solidity extension to edit Solidity contracts.
@@ -295,3 +295,64 @@ Switching back to the previous account, `withdraw` should work (for no more than
 
 If you make modifications to the contract, don't forget to compile and deploy again!
 You can also take a look at other plug-ins, such as the _Solidity static analysis_, the _Solidity unit testing_ or the _Debugger_.
+
+## Local testing with Truffle
+
+This is a simple example demonstrating a Truffle test case using JavaScript. For more information, please refer to the [documentation of Truffle](https://www.trufflesuite.com/docs/truffle/overview), including [installation](https://www.trufflesuite.com/docs/truffle/getting-started/installation).
+
+Create and initialize a new, default Truffle project.
+```bash
+mkdir SimpleBankTest
+cd SimpleBankTest
+truffle init
+```
+
+Put the `SimpleBank` example from above into `contracts/SimpleBank.sol`.
+
+Create a file `migrations/2_deploy_contracts.js` with the following content.
+```javascript
+var SimpleBank = artifacts.require("./SimpleBank.sol");
+module.exports = function(deployer) {
+  deployer.deploy(SimpleBank);
+};
+```
+
+Create a file `test/SimpleBank.js` with the following content.
+```javascript
+var SimpleBank = artifacts.require("SimpleBank");
+
+contract('SimpleBank', function(accounts) {
+    var sb; // To store the instance when running
+
+    // Test case 1
+    it("Test initial balance", function() {
+        return SimpleBank.deployed().then(function(instance) {
+            sb = instance;
+            return sb.getBalance({ from: accounts[0] });
+        }).then(function(x) {
+            assert.equal(0, x, "Wrong initial balance");
+        });
+    });
+
+    // Test case 2
+    it("Test balance after deposit", function() {
+        return SimpleBank.deployed().then(function(instance) {
+            sb = instance;
+            return sb.deposit({ from: accounts[0], value: web3.utils.toWei('10', 'ether') });
+        }).then(function(tx_receipt) {
+            return sb.getBalance({ from: accounts[0] });
+        }).then(function(x) {
+            assert.equal(web3.utils.toWei('10', 'ether'), x, "Wrong balance");
+        }).then(function() {
+            return sb.getBalance({ from: accounts[1] });
+        }).then(function(x) {
+            assert.equal(0, x, "Wrong balance");
+        });
+    });
+});
+```
+
+Finally, the tests can be run with the following command.
+```
+truffle test
+```
