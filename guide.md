@@ -222,7 +222,7 @@ There is also a handful of tools targeting the verification of contracts, includ
 
 As with other programming languages, development requires some tools.
 [Visual Studio Code](http://code.visualstudio.com) has a Solidity extension to edit Solidity contracts.
-The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.15/installing-solidity.html), which can translate the contract into EVM bytecode.
+The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.15/installing-solidity.html), which can translate th contracts into EVM bytecode.
 Alternatively, [Remix](http://remix.ethereum.org) can also be used, which is a web-based IDE supporting editing, compiling and testing.
 In order to deploy a contract to a real network one also needs a wallet such as [Metamask](https://github.com/MetaMask).
 For more complex contracts and scenarios, one should also consider the [Truffle Suite](http://truffleframework.com), providing various development tools.
@@ -298,9 +298,12 @@ You can also take a look at other plug-ins, such as the _Solidity static analysi
 
 ## Local testing with Truffle
 
-This is a simple example demonstrating a Truffle test case using JavaScript. For more information, please refer to the [documentation of Truffle](https://www.trufflesuite.com/docs/truffle/overview), including [installation](https://www.trufflesuite.com/docs/truffle/getting-started/installation).
+[Truffle](https://www.trufflesuite.com) is a development suite for Ethereum, providing various tools, including compilation, linking, binary management, testing, deployment, network management, package management, interactive console and configurable build pipeline.
+In the following we demonstrate the unit testing capabilities of Truffle with a simple example.
+For more information, please refer to the [documentation of Truffle](https://www.trufflesuite.com/docs/truffle/overview), including [installation](https://www.trufflesuite.com/docs/truffle/getting-started/installation).
 
 Create and initialize a new, default Truffle project.
+This will initialize the directory structure and create some skeleton files.
 ```bash
 mkdir SimpleBankTest
 cd SimpleBankTest
@@ -317,7 +320,7 @@ module.exports = function(deployer) {
 };
 ```
 
-Create a file `test/SimpleBank.js` with the following content.
+Create a test file `test/SimpleBank.js` with the following content.
 ```javascript
 var SimpleBank = artifacts.require("SimpleBank");
 
@@ -353,6 +356,24 @@ contract('SimpleBank', function(accounts) {
 ```
 
 Finally, the tests can be run with the following command.
+This will launch a local, built-in blockchain, deploy the contract and run the tests.
 ```
 truffle test
 ```
+
+The output should look like the following, with all tests successfully passing.
+```
+Compiling your contracts...
+===========================
+> Compiling ./contracts/Migrations.sol
+> Compiling ./contracts/SimpleBank.sol
+
+  Contract: SimpleBank
+    Test initial balance (56ms)
+    Test balance after deposit (366ms)
+
+  2 passing (468ms)
+```
+
+In this example we wrote unit tests using [JavaScript](https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript), but it is also possible to use [Solidity itself](https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity).
+For more information please refer to the [documentation of Truffle](https://www.trufflesuite.com/docs/truffle/overview).
