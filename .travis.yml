@@ -15,6 +15,7 @@ script:
 - mkdir out
 - cp *.html out/
 - cp *.pdf out/
+- cp -R contracts/ out/contracts/
 notifications:
   email:
     on_success: change

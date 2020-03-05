@@ -201,6 +201,11 @@ When functions call other functions, the errors propagate up, making the whole c
 However, there are a few exceptions from this rule: `send`, `call`, `delegatecall` and `staticcall` only indicate the error in their return value.
 These functions should be used with caution.
 
+### More examples
+
+- [BmeCoin](http://ftsrg.mit.bme.hu/blockchain-ethereumlab/contracts/BmeCoin.sol): A simple token.
+- [DNS](http://ftsrg.mit.bme.hu/blockchain-ethereumlab/contracts/DNS.sol): Domain name registration service.
+
 ### Further reading
 
 Solidity supports some other language elements that were not discussed here, including [function modifiers](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#function-modifiers), [events](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#events), [inheritance](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#inheritance), [interfaces](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#interfaces) and [libraries](https://solidity.readthedocs.io/en/v0.5.15/contracts.html#libraries).
