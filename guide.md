@@ -1,7 +1,7 @@
 ---
 title: Ethereum and Solidity development quick guide
 author: Ákos Hajdu, Imre Kocsis, Péter Garamvölgyi
-date: 2020.03.25
+date: 2020.04.21
 ---
 
 This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
@@ -232,27 +232,32 @@ Furthermore, the blockchain is permanent so buggy contracts cannot be patched on
 It is therefore highly recommended to read about [security considerations](https://solidity.readthedocs.io/en/v0.5.15/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
 There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://securify.chainsecurity.com/), [MythX](https://mythx.io/), [Slither](https://github.com/crytic/slither), [solc-verify](https://github.com/SRI-CSL/solidity/), [VerX](https://verx.ch/) and [VeriSolid](https://github.com/VeriSolid/smart-contracts).
 
-## Development and testing online with Remix
+## Development and test environments
 
 As with other programming languages, development requires some tools.
-[Visual Studio Code](http://code.visualstudio.com) has a Solidity extension to edit Solidity contracts.
-The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.15/installing-solidity.html), which can translate th contracts into EVM bytecode.
-Alternatively, [Remix](http://remix.ethereum.org) can also be used, which is a web-based IDE supporting editing, compiling and testing.
-In order to deploy a contract to a real network one also needs a wallet such as [Metamask](https://github.com/MetaMask).
-For more complex contracts and scenarios, one should also consider the [Truffle Suite](http://truffleframework.com), providing various development tools.
-In the following, we cover the basics of [Remix](http://remix.ethereum.org).
-For more information, please refer to the [documentation of Remix](https://remix-ide.readthedocs.io/en/latest/).
+At first, it is recommended to play around with [Remix](http://remix.ethereum.org), which is an online IDE.
+It only requires a browser, and provides an editor and a built-in compiler.
+Furthermore, it can also create a local test network where the contracts can be deployed and transactions can be issued on a GUI interactively.
+Remix also has some further plug-ins for debugging, static analysis and so on.
 
-### Writing a contract
+In a local environment, [Visual Studio Code](http://code.visualstudio.com) has a [Solidity extension](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity) to edit Solidity contracts.
+The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.15/installing-solidity.html), which can translate contracts into EVM bytecode.
+For testing in a local environment, the [Truffle Suite](http://truffleframework.com) is recommended, which has extensive capabilities in writing and executing automated tests.
 
+_For more complex contracts and scenarios, one should also consider other features of [Truffle Suite](http://truffleframework.com).
+Finally, in order to deploy a contract to a real network one also needs a wallet such as [Metamask](https://github.com/MetaMask)._
+
+### Remix
+We cover the basics of [Remix](http://remix.ethereum.org), for more information, please refer to the [documentation of Remix](https://remix-ide.readthedocs.io/en/latest/).
+
+**Writing a contract.**
 You can create or import files in Remix with the icons on the top left (file explorers).
 As an example, create a new file named `SimpleBank.sol` and copy the code from the SimpleBank example above.
 Remix supports syntax highlighting and auto completion as well.
 
 ![A smart contract in the editor of Remix](img/remix-editor.png)
 
-### Compiling a contract
-
+**Compiling a contract.**
 In order to compile a contract, the compiler plug-in has to be activated by clicking on the plug-in icon on the left sidebar and finding the _Solidity compiler_ plugin.
 A new icon for the compiler should appear in the left sidebar which activates the compiler tab.
 You can select a compiler version and click _Compile_ or you can also turn on the _Auto compile_ option.
@@ -261,8 +266,7 @@ On a successful compilation, the contract name will appear below the compiler co
 ![Compiling in Remix](img/remix-compiler.png)
 
 
-### Testing a contract
-
+**Testing a contract.**
 For a simple local test, activate the _Deploy & run transactions_ plug-in.
 The default _environment_ is JavaScript VM, which runs an Ethereum Virtual Machine (EVM) locally (i.e., it does not connect to the real network).
 This makes testing quick and free.
@@ -310,7 +314,7 @@ Switching back to the previous account, `withdraw` should work (for no more than
 If you make modifications to the contract, don't forget to compile and deploy again!
 You can also take a look at other plug-ins, such as the _Solidity static analysis_, the _Solidity unit testing_ or the _Debugger_.
 
-## Local testing with Truffle
+### Local testing with Truffle
 
 [Truffle](https://www.trufflesuite.com) is a development suite for Ethereum, providing various tools, including compilation, linking, binary management, testing, deployment, network management, package management, interactive console and configurable build pipeline.
 In the following we demonstrate the unit testing capabilities of Truffle with a simple example.
