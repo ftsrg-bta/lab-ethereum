@@ -243,6 +243,7 @@ Remix also has some further plug-ins for debugging, static analysis and so on.
 In a local environment, [Visual Studio Code](http://code.visualstudio.com) has a [Solidity extension](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity) to edit Solidity contracts.
 The official compiler is [Solc](https://solidity.readthedocs.io/en/v0.5.15/installing-solidity.html), which can translate contracts into EVM bytecode.
 For testing in a local environment, the [Truffle Suite](http://truffleframework.com) is recommended, which has extensive capabilities in writing and executing automated tests.
+Note that Truffle also includes a compiler internally so installing Solc can be skipped in this case.
 
 _For more complex contracts and scenarios, one should also consider other features of [Truffle Suite](http://truffleframework.com).
 Finally, in order to deploy a contract to a real network one also needs a wallet such as [Metamask](https://github.com/MetaMask)._
