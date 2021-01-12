@@ -426,8 +426,8 @@ The output should look like the following, with all tests successfully passing.
 ```
 Compiling your contracts...
 ===========================
-✔ Fetching solc version list from solc-bin. Attempt #1
-✔ Downloading compiler. Attempt #1.
+Fetching solc version list from solc-bin. Attempt #1
+Downloading compiler. Attempt #1.
 > Compiling ./contracts/Migrations.sol
 > Compiling ./contracts/SimpleBank.sol
 > Artifacts written to /tmp/test--4464-ffkygXpC3oCc
@@ -437,8 +437,8 @@ Compiling your contracts...
 
 
   Contract: SimpleBank
-    ✓ Test initial balance (86ms)
-    ✓ Test balance after deposit (649ms)
+    Test initial balance (86ms)
+    Test balance after deposit (649ms)
 
 
   2 passing (901ms)
