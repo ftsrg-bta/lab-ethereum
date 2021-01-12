@@ -197,8 +197,9 @@ They are most commonly used to perform checks before or after executing the body
 
 The example below declares an `owner` state variable, which stores the creator of the contract (see constructor).
 Then, a modifier called `onlyOwner` is defined, which checks if the sender equals to the owner.
-If yes, it executes the rest of the function which is denoted by the special _placeholder_ statement `_`.
+Then, it executes the rest of the function, which is denoted by the special _placeholder_ statement `_`.
 The `increment` function has the `onlyOwner` modifier, which means that instead of executing `x++`, it first jumps to the modifier, which performs the check and then does the increment at the placeholder statement.
+Note that it is also possible to put statements after the placeholder `_`, these will be executed at the end of the function.
 This is the most basic way of using modifiers, but it is really useful when multiple functions share some common checks.
 ```solidity
 contract ModifierExample {
