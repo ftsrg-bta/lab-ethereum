@@ -259,12 +259,6 @@ Furthermore, the blockchain is permanent so buggy contracts cannot be patched on
 It is therefore highly recommended to read about [security considerations](https://docs.soliditylang.org/en/v0.8.0/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
 There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://github.com/eth-sri/securify2), [MythX](https://mythx.io/), [Slither](https://github.com/crytic/slither), [solc-verify](https://github.com/SRI-CSL/solidity/), [VerX](https://verx.ch/) and [VeriSol](https://github.com/microsoft/verisol).
 
-**----------------------------------------**
-
-**WARNING: the part below is not yet updated to 0.8.0, it still corresponds to 0.5.15.**
-
-**----------------------------------------**
-
 ## Development and test environments
 
 As with other programming languages, development requires some tools.
@@ -283,25 +277,31 @@ Finally, in order to deploy a contract to a real network one also needs a wallet
 
 ### Remix
 We cover the basics of [Remix](http://remix.ethereum.org), for more information, please refer to the [documentation of Remix](https://remix-ide.readthedocs.io/en/latest/).
+_Hint:_ you can choose from different themes using the settings at the bottom left.
 
 **Writing a contract.**
+Remix has different modules, which can be accessed from the icons on the left.
+Let's start with the [file explorers](https://remix-ide.readthedocs.io/en/latest/file_explorer.html).
 You can create or import files in Remix with the icons on the top left (file explorers).
 As an example, create a new file named `SimpleBank.sol` and copy the code from the SimpleBank example above.
-Remix supports syntax highlighting and auto completion as well.
+The Remix [editor](https://remix-ide.readthedocs.io/en/latest/solidity_editor.html) supports syntax highlighting and auto completion as well.
+Don't mind the `artifacts` folder, it appears automatically during compilation.
 
 ![A smart contract in the editor of Remix](img/remix-editor.png)
 
 **Compiling a contract.**
-In order to compile a contract, the compiler plug-in has to be activated by clicking on the plug-in icon on the left sidebar and finding the _Solidity compiler_ plugin.
-A new icon for the compiler should appear in the left sidebar which activates the compiler tab.
-You can select a compiler version and click _Compile_ or you can also turn on the _Auto compile_ option.
-On a successful compilation, the contract name will appear below the compiler configuration.
+In order to compile a contract, the [compiler plug-in](https://remix-ide.readthedocs.io/en/latest/compile.html) has to be activated (if it is not active yet) by clicking on the plug-in icon on the left sidebar and finding the _Solidity compiler_ plugin.
+A new icon for the compiler should appear in the left sidebar, which activates the compiler tab.
+Make sure to select an appropriate compiler version and click the _Compile_ button.
+You can also turn on the _Auto compile_ option.
+On a successful compilation, the contract name will appear below the button.
+Warnings or errors also appear below.
 
 ![Compiling in Remix](img/remix-compiler.png)
 
 
 **Testing a contract.**
-For a simple local test, activate the _Deploy & run transactions_ plug-in.
+For a simple local test, activate the  [Deploy & run transactions plug-in](https://remix-ide.readthedocs.io/en/latest/run.html).
 The default _environment_ is JavaScript VM, which runs an Ethereum Virtual Machine (EVM) locally (i.e., it does not connect to the real network).
 This makes testing quick and free.
 Remix also supports connecting to a real network by selecting the Web3 option as an environment (which requires a wallet first).
@@ -333,7 +333,7 @@ After executing the function, the return value (if any) appears below.
 ![The deployed contract in Remix](img/remix-deployed.png)
 
 You can also inspect the details of the transactions at the bottom (below the editor).
-For example, you can see the deployment transaction below.
+For example, you can see all the details of the deployment transaction on the image below.
 
 ![Details of a transaction in Remix](img/remix-details.png)
 
@@ -343,10 +343,16 @@ Then `getBalance` should return 10000000000000000000 (Wei).
 Calling `transactions` should return 1.
 If you switch to a different account and call `getBalance` you should see 0.
 If you try to `withdraw`, the transaction should fail due to the `require`.
-Switching back to the previous account, `withdraw` should work (for no more than 10 Ether).
+Switching back to the previous account, `withdraw` should work (for at most 10 Ether, of course).
 
 If you make modifications to the contract, don't forget to compile and deploy again!
-You can also take a look at other plug-ins, such as the _Solidity static analysis_, the _Solidity unit testing_ or the _Debugger_.
+You can also take a look at other plug-ins, such as the [Solidity static analysis](https://remix-ide.readthedocs.io/en/latest/static_analysis.html), the [Solidity unit testing](https://remix-ide.readthedocs.io/en/latest/unittesting.html) or the [Debugger](https://remix-ide.readthedocs.io/en/latest/debugger.html).
+
+**----------------------------------------**
+
+**WARNING: the part below is not yet updated to 0.8.0, it still corresponds to 0.5.15.**
+
+**----------------------------------------**
 
 ### Local testing with Truffle
 
