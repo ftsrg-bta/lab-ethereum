@@ -1,7 +1,7 @@
 ---
 title: Solidity/Ethereum vulnerabilities
 author: Ákos Hajdu
-date: 2020.03.03
+date: 2021.01.12.
 ---
 
 This is a supplementary material for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
@@ -12,6 +12,9 @@ There is a wide variety of vulnerabilities in blockchain-based infrastructures.
 The source of vulnerabilities is often the misalignment or the gap between the programmers intent and the actual execution semantics.
 Vulnerabilities can be categorized by the layer in which they appear.
 Here we discuss vulnerabilities in the context of Ethereum and Solidity, but most of them can appear in other blockchain infrastructures as well.
+
+_Note that Solidity is a rapidly evolving language, and some vulnerabilities are only possible in certain versions._
+_Always be aware of the specifics of the targeted version._
 
 ## Programming language / contracts
 
@@ -26,7 +29,7 @@ Here we discuss vulnerabilities in the context of Ethereum and Solidity, but mos
 
 ## Execution engine
 
-- **Under/overflows**: The Ethereum Virtual Machine (EVM) can operate with 8, 16, 24, 32, ..., 256 bit signed or unsigned integers, which silently under/overflow without triggering an error. For example, `255 + 1 == 0` on 8 unsigned bits and `127 + 1 == -128` on 8 signed bits. Programmers should consider using the [SafeMath library](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/math/SafeMath.sol) for arithmetic operations. An infamous overflow [caused tokens to appear from nowhere](https://medium.com/@peckshield/alert-new-batchoverflow-bug-in-multiple-erc20-smart-contracts-cve-2018-10299-511067db6536).
+- **Under/overflows**: The Ethereum Virtual Machine (EVM) can operate with 8, 16, 24, 32, ..., 256 bit signed or unsigned integers, which silently under/overflow without triggering an error. For example, `255 + 1 == 0` on 8 unsigned bits and `127 + 1 == -128` on 8 signed bits. Since version 0.8.0, Solidity checks for under- and overflows, and reverts the transaction. In older versions, programmers should consider using the [SafeMath library](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/math/SafeMath.sol) for arithmetic operations. An infamous overflow [caused tokens to appear from nowhere](https://medium.com/@peckshield/alert-new-batchoverflow-bug-in-multiple-erc20-smart-contracts-cve-2018-10299-511067db6536).
 - **Immutable bugs**: An inherent property of the blockchain is that the code of a contract cannot be modified or patched after publication, even if a bug is discovered: the contract will stay there to be exploited. Note, that there are some patterns to kill a contract or to forward calls to a mutable address, but that again brings up new vulnerabilities (an attacker might kill or hijack the contract). Such patterns should be implemented with great care.
 - **Ether lost in transfer**: Sending Ether to an orphan address (e.g., the user lost the private key) is lost forever.
 - **Stack size limit**: Until a hard fork, it was possible to set up a long chain of calls (one less than the limit) and then finally call a victim contract. If the victim called some other function, it would fail with an exception due to the stack size limit. The victim contract might not have been expecting an exception.
@@ -51,5 +54,5 @@ Some further papers:
 - [Chen, Pendleton, Njilla, Xu - A Survey on Ethereum Systems Security: Vulnerabilities, Attacks and Defenses (2019)](https://arxiv.org/pdf/1908.04507)
 - [Hajdu, Jovanović - solc-verify: A Modular Verifier for Solidity Smart Contracts (2019)](https://arxiv.org/pdf/1907.04262.pdf)
 
-It is also highly recommended to read about [security considerations](https://solidity.readthedocs.io/en/v0.5.0/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
-There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://securify.chainsecurity.com/), [MythX](https://mythx.io/), [Slither](https://github.com/crytic/slither), [solc-verify](https://github.com/SRI-CSL/solidity/), [VerX](https://verx.ch/) and [VeriSolid](https://github.com/VeriSolid/smart-contracts).
+It is also highly recommended to read about [security considerations](https://docs.soliditylang.org/en/v0.8.0/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
+There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://github.com/eth-sri/securify2), [MythX](https://mythx.io/), [Slither](https://github.com/crytic/slither), [solc-verify](https://github.com/SRI-CSL/solidity/), [VerX](https://verx.ch/) and [VeriSol](https://github.com/microsoft/verisol).
