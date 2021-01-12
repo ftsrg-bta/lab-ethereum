@@ -1,4 +1,5 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8.0;
 
 // A custom coin, where the owner gets the initial supply.
 // Then, users can transfer their tokens.
@@ -8,7 +9,7 @@ contract BmeCoin {
     mapping(address=>uint) balances; // Balance of each user (address)
 
     // Constructor with an initial supply
-    constructor(uint totalSupply) public {
+    constructor(uint totalSupply) {
         // The caller (who deploys the contract) gets all coins
         balances[msg.sender] = totalSupply;
     }
@@ -22,8 +23,8 @@ contract BmeCoin {
     function transfer(address to, uint amount) public {
         // Check that the caller has enough tokens
         require(balances[msg.sender] >= amount);
-        // Guard against overflow: the receiver should not overflow
-        require(balances[to] + amount >= balances[to]);
+        // Guard against overflow (only needed below 0.8.0): the receiver should not overflow
+        // require(balances[to] + amount >= balances[to]);
         // Make the transfer by reducing caller and increasing receiver
         balances[msg.sender] -= amount;
         balances[to] += amount;

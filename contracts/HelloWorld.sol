@@ -1,4 +1,5 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8.0;
 
 // Hello world example, storing a message that can be queried.
 contract Greeter {
@@ -7,7 +8,7 @@ contract Greeter {
     string message; // Message
 
     // Constructor: get a message and store it
-    constructor(string memory _message) public {
+    constructor(string memory _message) {
         message = _message;
     }
 

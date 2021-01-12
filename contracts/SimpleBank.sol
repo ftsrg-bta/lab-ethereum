@@ -1,4 +1,5 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8.0;
 
 // A simple bank, where users can deposit and withdraw money (Ether)
 // to/from their balance. The number of transactions is also counted.
@@ -34,7 +35,7 @@ contract SimpleBank {
         // Do the actual transfer between the contract and the caller
         // If transfer fails for some reason, the error is propagated
         // and withdraw also fails
-        msg.sender.transfer(amount);
+        payable(msg.sender).transfer(amount);
         // Increment the number of transactions
         transactions++;
     }

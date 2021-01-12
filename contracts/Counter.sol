@@ -1,4 +1,5 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8.0;
 
 // A simple counter, which can only be increased by its owner,
 // but can be queried by anyone.
@@ -9,7 +10,7 @@ contract Counter {
     uint public counter; // Value of the counter
 
     // Constructor
-    constructor() public {
+    constructor() {
         // Get the owner from the parameters of the transaction
         owner = msg.sender;
         // Initialize the counter
@@ -26,5 +27,4 @@ contract Counter {
         // Otherwise increment the counter
         counter++;
     }
-
 }

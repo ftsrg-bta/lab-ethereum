@@ -1,4 +1,5 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8.0;
 
 // A domain name service contract, where users can register IP addresses
 // for domain names for a given price, that is adjustable by the owner.
@@ -24,8 +25,8 @@ contract DNS {
     }
 
     // Constructor
-    constructor() public {
-        owner = msg.sender; // Deployer (caller) is the owner
+    constructor() {
+        owner = payable(msg.sender); // Deployer (caller) is the owner
     }
 
     // Set the price, only owner can call
