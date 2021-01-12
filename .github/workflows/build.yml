@@ -11,8 +11,8 @@ jobs:
       run: |
         sudo apt-get install -qq -y texlive-base texlive-science texlive-xetex texlive-fonts-recommended texlive-latex-extra
         sudo apt-get install lmodern
-        wget https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
-        sudo dpkg -i pandoc-1.19.2.1-1-amd64.deb
+        wget https://github.com/jgm/pandoc/releases/download/2.11.3.2/pandoc-2.11.3.2-1-amd64.deb
+        sudo dpkg -i pandoc-2.11.3.2-1-amd64.deb
     - name: Build guide.html
       run: pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.html --css=pandoc.css --standalone --self-contained
     - name: Build vulnerabilities.html
