@@ -9,7 +9,6 @@ jobs:
       uses: actions/checkout@v2
     - name: Install packages
       run: |
-        sudo apt-get update -qq
         sudo apt-get install -qq -y texlive-base texlive-science texlive-xetex texlive-fonts-recommended texlive-latex-extra
         sudo apt-get install lmodern
         wget https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
