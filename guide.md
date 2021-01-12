@@ -267,7 +267,7 @@ This function gets executed when a call to the contract matches no other functio
 Note that the fallback function must be `external`, and can also be marked `payable` in order to be able to receive Ether.
 An example fallback function can be seen below.
 ```solidity
-fallback () external payable {
+fallback() external payable {
     // Do something
 }
 ```
@@ -276,6 +276,11 @@ It is important to be aware of this behavior, because when calling some function
 **Receive function.**
 Each contract can define a special [_receive Ether function_](https://docs.soliditylang.org/en/v0.8.0/contracts.html#receive-ether-function).
 This function gets executed when a contract receives Ether without calling any particular function (e.g., by using `transfer()` on its address).
+```solidity
+receive() external payable {
+    // Do something
+}
+```
 
 **Remark.** Before 0.6.0, there was a single function with no name, that represented both the fallback and the receive Ether functions.
 
