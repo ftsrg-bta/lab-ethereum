@@ -191,6 +191,35 @@ contract SimpleBank {
 Since 0.7.0 the constructor is always public.
 In order to prohibit instantiating a contract, it should be marked `abstract`.
 
+**Function modifiers.**
+[Function modifiers](https://docs.soliditylang.org/en/v0.8.0/contracts.html#function-modifiers) can change the behavior of functions.
+They are most commonly used to perform checks before or after executing the body of the function, especially if multiple functions require the same check.
+
+The example below declares an `owner` state variable, which stores the creator of the contract (see constructor).
+Then, a modifier called `onlyOwner` is defined, which checks if the sender equals to the owner.
+If yes, it executes the rest of the function which is denoted by the special _placeholder_ statement `_`.
+The `increment` function has the `onlyOwner` modifier, which means that instead of executing `x++`, it first jumps to the modifier, which performs the check and then does the increment at the placeholder statement.
+This is the most basic way of using modifiers, but it is really useful when multiple functions share some common checks.
+```solidity
+contract ModifierExample {
+    address owner;
+    uint x;
+
+    constructor() {
+        owner = msg.sender;
+    }
+    
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+    
+    function increment() public onlyOwner {
+        x++;
+    }
+}
+```
+
 ### Handling Ether
 
 Each [address](https://docs.soliditylang.org/en/v0.8.0/units-and-global-variables.html#members-of-address-types) (contract or external) is associated with a balance in Ether.
@@ -277,7 +306,7 @@ See details in the [documentation](https://solidity.readthedocs.io/en/v0.8.0/con
 
 ### Further reading
 
-Solidity supports some other language elements that were not discussed here, including [function modifiers](https://docs.soliditylang.org/en/v0.8.0/contracts.html#function-modifiers), [events](https://docs.soliditylang.org/en/v0.8.0/contracts.html#events), [inheritance](https://docs.soliditylang.org/en/v0.8.0/contracts.html#inheritance), [interfaces](https://docs.soliditylang.org/en/v0.8.0/contracts.html#interfaces) and [libraries](https://docs.soliditylang.org/en/v0.8.0/contracts.html#libraries).
+Solidity supports some other language elements that were not discussed here, including [events](https://docs.soliditylang.org/en/v0.8.0/contracts.html#events), [inheritance](https://docs.soliditylang.org/en/v0.8.0/contracts.html#inheritance), [interfaces](https://docs.soliditylang.org/en/v0.8.0/contracts.html#interfaces) and [libraries](https://docs.soliditylang.org/en/v0.8.0/contracts.html#libraries).
 Solidity 0.6.0 also introduced exception handling using [try/catch](https://solidity.readthedocs.io/en/v0.8.0/control-structures.html#try-catch).
 For more information, please refer to the [documentation](https://docs.soliditylang.org/en/v0.8.0/).
 
