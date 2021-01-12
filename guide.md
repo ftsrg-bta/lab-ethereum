@@ -348,12 +348,6 @@ Switching back to the previous account, `withdraw` should work (for at most 10 E
 If you make modifications to the contract, don't forget to compile and deploy again!
 You can also take a look at other plug-ins, such as the [Solidity static analysis](https://remix-ide.readthedocs.io/en/latest/static_analysis.html), the [Solidity unit testing](https://remix-ide.readthedocs.io/en/latest/unittesting.html) or the [Debugger](https://remix-ide.readthedocs.io/en/latest/debugger.html).
 
-**----------------------------------------**
-
-**WARNING: the part below is not yet updated to 0.8.0, it still corresponds to 0.5.15.**
-
-**----------------------------------------**
-
 ### Local testing with Truffle
 
 [Truffle](https://www.trufflesuite.com) is a development suite for Ethereum, providing various tools, including compilation, linking, binary management, testing, deployment, network management, package management, interactive console and configurable build pipeline.
@@ -419,18 +413,28 @@ This will launch a local, built-in blockchain, deploy the contract and run the t
 truffle test
 ```
 
+If Truffle is complaining about wrong compiler version, open `truffle-config.js` at the root of the project, scroll down to `solc` and set the `version` attribute to `0.8.0` (also uncomment if needed).
+
 The output should look like the following, with all tests successfully passing.
 ```
 Compiling your contracts...
 ===========================
+✔ Fetching solc version list from solc-bin. Attempt #1
+✔ Downloading compiler. Attempt #1.
 > Compiling ./contracts/Migrations.sol
 > Compiling ./contracts/SimpleBank.sol
+> Artifacts written to /tmp/test--4464-ffkygXpC3oCc
+> Compiled successfully using:
+   - solc: 0.8.0+commit.c7dfd78e.Emscripten.clang
+
+
 
   Contract: SimpleBank
-    Test initial balance (56ms)
-    Test balance after deposit (366ms)
+    ✓ Test initial balance (86ms)
+    ✓ Test balance after deposit (649ms)
 
-  2 passing (468ms)
+
+  2 passing (901ms)
 ```
 
 In this example we wrote unit tests using [JavaScript](https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript), but it is also possible to use [Solidity itself](https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity).
