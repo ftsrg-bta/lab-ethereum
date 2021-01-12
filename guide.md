@@ -5,7 +5,7 @@ date: 2021.01.12
 ---
 
 This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
-The purpose of this document is to give a brief introduction into developing smart contracts for the Ethereum blockchain in the Solidity language.
+The purpose of this document is to give a brief introduction into developing smart contracts for the Ethereum blockchain using the Solidity language.
 For more information, please follow the links in the document.
 
 ## Ethereum basics
@@ -354,6 +354,7 @@ You can also take a look at other plug-ins, such as the [Solidity static analysi
 In the following we demonstrate the unit testing capabilities of Truffle with a simple example.
 For more information, please refer to the [documentation of Truffle](https://www.trufflesuite.com/docs/truffle/overview), including [installation](https://www.trufflesuite.com/docs/truffle/getting-started/installation).
 
+**Creating a project.**
 Create and initialize a new, default Truffle project.
 This will initialize the directory structure and create some skeleton files.
 ```bash
@@ -371,7 +372,9 @@ module.exports = function(deployer) {
   deployer.deploy(SimpleBank);
 };
 ```
+Migrations are JavaScript files that deploy contracts to the (test) network.
 
+**Writing tests.**
 Create a test file `test/SimpleBank.js` with the following content.
 ```javascript
 var SimpleBank = artifacts.require("SimpleBank");
@@ -406,8 +409,12 @@ contract('SimpleBank', function(accounts) {
     });
 });
 ```
+The first test case creates a contract and checks if the initial balance of account 0 is zero.
+The second test case makes a deposit from account 0, and checks if the balance is modified appropriately.
+It also checks that the balance of account 1 should still be zero.
 
-Finally, the tests can be run with the following command.
+**Executing tests.**
+Tests can be run with the following command.
 This will launch a local, built-in blockchain, deploy the contract and run the tests.
 ```
 truffle test
