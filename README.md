@@ -1,6 +1,6 @@
 ## Blockchain - Ethereum lab
 
-[![Build status](https://api.travis-ci.com/ftsrg/blockchain-ethereumlab.svg?token=85GYo3nhkE5uMJYayyw8&branch=master)](https://travis-ci.com/ftsrg/blockchain-ethereumlab)
+![.github/workflows/build.yml](https://github.com/ftsrg/blockchain-ethereumlab/workflows/.github/workflows/build.yml/badge.svg)
 
 Materials for the Ethereum/Solidity hands-on lecture of the Blockchain course.
 
