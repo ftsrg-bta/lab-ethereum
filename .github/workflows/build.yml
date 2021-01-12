@@ -14,11 +14,11 @@ jobs:
         wget https://github.com/jgm/pandoc/releases/download/2.11.3.2/pandoc-2.11.3.2-1-amd64.deb
         sudo dpkg -i pandoc-2.11.3.2-1-amd64.deb
     - name: Build guide.html
-      run: pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.html --css=pandoc.css --standalone --self-contained
+      run: pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.html --css=pandoc.css --standalone --self-contained --syntax-definition solidity.xml
     - name: Build vulnerabilities.html
       run: pandoc vulnerabilities.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=vulnerabilities.html --css=pandoc.css --standalone --self-contained
     - name: Build guide.pdf
-      run: pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.pdf -V geometry:margin=1in -V urlcolor:blue
+      run: pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.pdf -V geometry:margin=1in -V urlcolor:blue  --syntax-definition solidity.xml --highlight-style breezedark
     - name: Build vulnerabilities.pdf
       run: pandoc vulnerabilities.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=vulnerabilities.pdf -V geometry:margin=1in -V urlcolor:blue
     - name: Collect results for deployment
