@@ -93,19 +93,37 @@ The SimpleBank example defines two state variables.
 Solidity is a strongly-typed language, i.e., the type of each variable must be explicitly specified.
 
 **Value types.** Solidity offers various [_value types_](https://docs.soliditylang.org/en/v0.8.0/types.html#value-types), including:
-- Booleans (true/false).
-- Signed and unsigned integers of various bit-lengths: `int8`, `int16`, `int24`, ..., `int256` are signed and `uint8`, `uint16`, `uint24`, ..., `uint256` are unsigned integers with 8, 16, 24, ..., 256 bits. The default `int` and `uint` types correspond to `int256` and `uint256` respectively.
+- Booleans (`bool`) with `true` and `false`.
+- Signed and unsigned integers of various bit-sizes: `int8`, `int16`, `int24`, ..., `int248`, `int256` are signed and `uint8`, `uint16`, `uint24`, ..., `uint248`, `uint256` are unsigned integers with 8, 16, 24, ..., 248, 256 bits. The default `int` and `uint` types correspond to `int256` and `uint256` respectively.
 - Addresses (`address`) are 160-bit integers corresponding to Ethereum addresses.
 - Enumerations.
 
-**Remark.** Since 0.8.0, if an arithmetic operation causes an under- or overflow, it is by default, treated as an error and the transaction is reverted.
+**Remark.**
+Since 0.8.0, if an arithmetic operation causes an under- or overflow, it is by default, treated as an error and the transaction is reverted.
 However, before 0.8.0, arithmetic operations had a wraparound semantics, resulting in silent under- and overflows.
 For example, `127 + 1` resulted in `-128` on 8 (signed) bits.
 This caused many bugs and problems, so since 0.8.0 the default behavior is to trigger an error in case of an under- or overflow.
 The old, wraparound behavior can be achieved by wrapping the arithmetic operation into an `unchecked { ... }` block.
 However, use this with caution.
+For example,
+```solidity
+int8 x = 127;
+int8 y = 1;
+int8 z = x + y;
+```
+results in a reverted transaction since 0.8.0, and results in `z` silently overflowing to `-128` before 0.8.0.
+However,
+```solidity
+int8 x = 127;
+int8 y = 1;
+unchecked {
+    int8 z = x + y;
+}
+```
+results in `z` being `-128` in 0.8.0 as well.
 
-**Reference types.** Solidity also provides [_reference types_](https://docs.soliditylang.org/en/v0.8.0/types.html#reference-types), including:
+**Reference types.**
+Solidity also provides [_reference types_](https://docs.soliditylang.org/en/v0.8.0/types.html#reference-types), including:
 - Arrays (with fixed or dynamic size), including strings.
 - Structures (`struct`).
 - Mappings (`mapping(...=>...)`).
@@ -193,6 +211,19 @@ In contrast, `send` indicates failure with a `false` return value.
 In the SimpleBank example, we use `transfer` in the `withdraw` function because if it fails, the failure is propagated to the `withdraw` function itself and the whole transaction is reverted (including the instruction that decreased the balance of the caller).
 If using `send` instead, we would have to manually check its return value and revert the transaction (using an explicit `revert()`) if needed.
 It is a [typical programming error](https://docs.soliditylang.org/en/v0.8.0/security-considerations.html#sending-and-receiving-ether) to use `send` without checking its return value.
+For example,
+```solidity
+payable(msg.sender).transfer(amount);
+```
+or
+```solidity
+if (!payable(msg.sender).send(amount)) revert();
+```
+are correct, but
+```solidity
+payable(msg.sender).send(amount);
+```
+is wrong, as the result of `send` is ignored.
 
 As already seen in the SimpleBank example, functions can be marked with the `payable` keyword, allowing the caller to attach Ether to the call.
 The Ether attached is automatically added to the balance of the contract, but can also be queried from the `msg.value` field.
