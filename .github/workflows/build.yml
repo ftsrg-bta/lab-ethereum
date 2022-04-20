@@ -28,7 +28,9 @@ jobs:
         cp *.pdf out/
         cp -R contracts/ out/contracts/
     - name: Deploy materials to gh-pages
-      uses: maxheld83/ghpages@68f783a4f5313d776c1599e18479607e71c9c738  # v0.3.0
-      env:
-        BUILD_DIR: out/
-        GH_PAT: ${{ secrets.GH_PAT }}
+      uses: JamesIves/github-pages-deploy-action@5dc1d5a192aeb5ab5b7d5a77b7d36aea4a7f5c92  # 4.1.4
+      with:
+        branch: gh-pages
+        folder: out
+        single-commit: true
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
