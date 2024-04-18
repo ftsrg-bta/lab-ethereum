@@ -519,19 +519,19 @@ Compiled 2 Solidity files successfully
 
   Lock
     Deployment
-      ✔ Should set the right unlockTime (610ms)
-      ✔ Should set the right owner
-      ✔ Should receive and store the funds to lock
-      ✔ Should fail if the unlockTime is not in the future
+      OK Should set the right unlockTime (610ms)
+      OK Should set the right owner
+      OK Should receive and store the funds to lock
+      OK Should fail if the unlockTime is not in the future
     Withdrawals
       Validations
-        ✔ Should revert with the right error if called too soon
-        ✔ Should revert with the right error if called from another account
-        ✔ Shouldn't fail if the unlockTime has arrived and the owner calls it
+        OK Should revert with the right error if called too soon
+        OK Should revert with the right error if called from another account
+        OK Shouldn't fail if the unlockTime has arrived and the owner calls it
       Events
-        ✔ Should emit an event on withdrawals
+        OK Should emit an event on withdrawals
       Transfers
-        ✔ Should transfer the funds to the owner
+        OK Should transfer the funds to the owner
 
 
   9 passing (790ms)
