@@ -1,18 +1,23 @@
 on: [push]
 
 jobs:
-  compile_paper_job:
+
+  build-docs:
     runs-on: ubuntu-latest
-    name: Compile paper
+    name: Render and upload docs
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Install packages
       run: |
-        sudo apt-get install -qq -y texlive-base texlive-science texlive-xetex texlive-fonts-recommended texlive-latex-extra
-        sudo apt-get install lmodern
-        wget https://github.com/jgm/pandoc/releases/download/2.11.3.2/pandoc-2.11.3.2-1-amd64.deb
-        sudo dpkg -i pandoc-2.11.3.2-1-amd64.deb
+        sudo apt-get install -qq -y \
+          pandoc \
+          texlive-base \
+          texlive-science \
+          texlive-xetex \
+          texlive-fonts-recommended \
+          texlive-latex-extra \
+          lmodern
     - name: Build guide.html
       run: pandoc guide.md --from=markdown_github-hard_line_breaks+yaml_metadata_block --output=guide.html --css=pandoc.css --standalone --self-contained --syntax-definition solidity.xml
     - name: Build vulnerabilities.html
@@ -27,10 +32,21 @@ jobs:
         cp *.html out/
         cp *.pdf out/
         cp -R contracts/ out/contracts/
-    - name: Deploy materials to gh-pages
-      uses: JamesIves/github-pages-deploy-action@5dc1d5a192aeb5ab5b7d5a77b7d36aea4a7f5c92  # 4.1.4
+    - name: Upload artefacts
+      uses: actions/upload-pages-artifact@v3
       with:
-        branch: gh-pages
-        folder: out
-        single-commit: true
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        path: out/
+
+  deploy-docs:
+    needs: build-docs
+    runs-on: ubuntu-latest
+    name: Deploy to GH Pages
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy materials to GH Pages
+      uses: actions/deploy-pages@v4
