@@ -8,7 +8,7 @@ This is a supplementary guide for the [Blockchain Technologies and Applications 
 The purpose of this document is to give a brief introduction into developing smart contracts for the Ethereum blockchain using the Solidity language.
 For more information, please follow the links in the document.
 
-## Ethereum basics
+## Ethereum Basics
 
 [Ethereum](https://www.ethereum.org/) is a generic blockchain-based computing platform where nodes in a peer-to-peer network are maintaining the ledger.
 Nodes run the [_Ethereum Virtual Machine (EVM)_](https://ethereum.github.io/yellowpaper/paper.pdf) and execute _transactions_ and _contracts_ compiled into EVM bytecode.
@@ -30,7 +30,7 @@ Otherwise, successful transactions will be included in some of the next blocks a
 
 For more information and details, you can read the [How does Ethereum work, anyway? article](https://medium.com/@preethikasireddy/how-does-ethereum-work-anyway-22d1df506369) or the [Ethereum yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf).
 
-## Solidity basics
+## Solidity Basics
 
 Solidity is a rapidly evolving language, but it has a well written and extensive [documentation](https://docs.soliditylang.org/en/v0.8.0/).
 The current guide is based on version 0.8.0 (released on December 16, 2020), but the latest documentation is available at [solidity.readthedocs.io/en/latest](https://docs.soliditylang.org/en/latest/).
@@ -38,7 +38,7 @@ Since this document only presents the basics, most of the concepts are the same,
 However, there were important breaking changes related to safety and security of contracts, so always be aware of the specifics of the targeted version.
 Sometimes, the same code is syntactically valid in older versions, but might behave differently (see for example, [overflows](https://docs.soliditylang.org/en/v0.8.0/080-breaking-changes.html#silent-changes-of-the-semantics)).
 
-### Layout of source files
+### Layout of Source Files
 
 As in most programming languages, code is organized into one or more _source files_.
 An example Solidity smart contract can be seen below.
@@ -84,7 +84,7 @@ At a first glance, smart contracts resemble simple classes in object-oriented pr
 
 It is also possible to [_import_](https://docs.soliditylang.org/en/v0.8.0/layout-of-source-files.html#importing-other-source-files) other source files and Solidity also supports [_inheritance_](https://docs.soliditylang.org/en/v0.8.0/contracts.html#inheritance) between contracts.
 
-### State variables
+### State Variables
 
 The SimpleBank example defines two state variables.
 - `transactions` is an unsigned integer (`uint`), storing the number of transactions in the current bank instance. It is incremented whenever users succesfully deposit or withdraw.
@@ -288,7 +288,7 @@ receive() external payable {
 The default unit is Wei, but literals can be specified using [suffixes](https://docs.soliditylang.org/en/v0.8.0/units-and-global-variables.html#ether-units) such as `wei`, `gwei` (== 1e9 Wei) or `ether` (== 1e18 Wei).
 For example, `uint amount = 1 ether;` will store `10^18` in the variable `amount`.
 
-### Error handling
+### Error Handling
 
 Transactions in Ethereum work in an atomic way: if there is an error, the whole transaction gets reverted.
 Errors can happen due to some condition in the execution, such as running out of the execution fee or indexing an array out of bounds.
@@ -304,13 +304,13 @@ These functions should be used with caution.
 Furthermore, since 0.6.0, the `try`/`catch` statement was introduced that can catch exceptions in external calls, stopping the propagation of exceptions.
 See details in the [documentation](https://solidity.readthedocs.io/en/v0.8.0/control-structures.html#try-catch).
 
-### More examples
+### More Examples
 
 - [Counter](http://ftsrg.mit.bme.hu/blockchain-ethereumlab/contracts/Counter.sol): A very basic counter.
 - [BmeCoin](http://ftsrg.mit.bme.hu/blockchain-ethereumlab/contracts/BmeCoin.sol): A simple token.
 - [DNS](http://ftsrg.mit.bme.hu/blockchain-ethereumlab/contracts/DNS.sol): Domain name registration service.
 
-### Further reading
+### Further Reading
 
 Solidity supports some other language elements that were not discussed here, including [events](https://docs.soliditylang.org/en/v0.8.0/contracts.html#events), [inheritance](https://docs.soliditylang.org/en/v0.8.0/contracts.html#inheritance), [interfaces](https://docs.soliditylang.org/en/v0.8.0/contracts.html#interfaces) and [libraries](https://docs.soliditylang.org/en/v0.8.0/contracts.html#libraries).
 Solidity 0.6.0 also introduced exception handling using [try/catch](https://solidity.readthedocs.io/en/v0.8.0/control-structures.html#try-catch).
@@ -325,7 +325,7 @@ Furthermore, the blockchain is permanent so buggy contracts cannot be patched on
 It is therefore highly recommended to read about [security considerations](https://docs.soliditylang.org/en/v0.8.0/security-considerations.html), [common attacks](https://medium.com/coinmonks/common-attacks-in-solidity-and-how-to-defend-against-them-9bc3994c7c18) and [best practices](https://consensys.github.io/smart-contract-best-practices/known_attacks/).
 There is also a handful of tools targeting the verification of contracts, including [Truffle](https://truffleframework.com/), [Securify](https://github.com/eth-sri/securify2), [MythX](https://mythx.io/), [Slither](https://github.com/crytic/slither), [solc-verify](https://github.com/SRI-CSL/solidity/), [VerX](https://verx.ch/) and [VeriSol](https://github.com/microsoft/verisol).
 
-## Development and test environments
+## Development and Test Environments
 
 As with other programming languages, development requires some tools.
 At first, it is recommended to play around with [Remix](http://remix.ethereum.org), which is an online IDE.
@@ -342,6 +342,7 @@ _For more complex contracts and scenarios, one should also consider other featur
 Finally, in order to deploy a contract to a real network one also needs a wallet such as [Metamask](https://github.com/MetaMask)._
 
 ### Remix
+
 We cover the basics of [Remix](http://remix.ethereum.org), for more information, please refer to the [documentation of Remix](https://remix-ide.readthedocs.io/en/latest/).
 _Hint:_ you can choose from different themes using the settings at the bottom left.
 
@@ -414,7 +415,7 @@ Switching back to the previous account, `withdraw` should work (for at most 10 E
 If you make modifications to the contract, don't forget to compile and deploy again!
 You can also take a look at other plug-ins, such as the [Solidity static analysis](https://remix-ide.readthedocs.io/en/latest/static_analysis.html), the [Solidity unit testing](https://remix-ide.readthedocs.io/en/latest/unittesting.html) or the [Debugger](https://remix-ide.readthedocs.io/en/latest/debugger.html).
 
-### Local testing with Truffle
+### Local Testing with Truffle
 
 [Truffle](https://www.trufflesuite.com) is a development suite for Ethereum, providing various tools, including compilation, linking, binary management, testing, deployment, network management, package management, interactive console and configurable build pipeline.
 In the following we demonstrate the unit testing capabilities of Truffle with a simple example.
