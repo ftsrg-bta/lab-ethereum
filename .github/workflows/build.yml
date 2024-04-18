@@ -38,6 +38,7 @@ jobs:
         path: out/
 
   deploy-docs:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs: build-docs
     runs-on: ubuntu-latest
     name: Deploy to GH Pages
