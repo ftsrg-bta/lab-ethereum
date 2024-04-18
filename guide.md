@@ -1,10 +1,10 @@
 ---
 title: Ethereum and Solidity development quick guide
-author: Ákos Hajdu, Imre Kocsis, Péter Garamvölgyi
-date: 2021.01.12
+author: Ákos Hajdu, Imre Kocsis, Péter Garamvölgyi, Balázs Toldi, Bertalan Zoltán Péter
+date: 2024-04-18
 ---
 
-This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](http://inf.mit.bme.hu/edu/courses/blockchain/) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
+This is a supplementary guide for the [Blockchain Technologies and Applications (VIMIAV17)](https://www.mit.bme.hu/oktatas/targyak/vimiav17) course at the [Budapest University of Technology and Economics](http://www.bme.hu/?language=en).
 The purpose of this document is to give a brief introduction into developing smart contracts for the Ethereum blockchain using the Solidity language.
 For more information, please follow the links in the document.
 
