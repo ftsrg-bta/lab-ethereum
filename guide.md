@@ -102,8 +102,8 @@ Solidity is a strongly-typed language, i.e., the type of each variable must be e
 Since 0.8.0, if an arithmetic operation causes an under- or overflow, it is by default, treated as an error and the transaction is reverted.
 However, before 0.8.0, arithmetic operations had a wraparound semantics, resulting in silent under- and overflows.
 For example, `127 + 1` resulted in `-128` on 8 (signed) bits.
-This caused many bugs and problems, so since 0.8.0 the default behavior is to trigger an error in case of an under- or overflow.
-The old, wraparound behavior can be achieved by wrapping the arithmetic operation into an `unchecked { ... }` block.
+This caused many bugs and problems, so since 0.8.0 the default behaviour is to trigger an error in case of an under- or overflow.
+The old, wraparound behaviour can be achieved by wrapping the arithmetic operation into an `unchecked { ... }` block.
 However, use this with caution.
 For example,
 ```solidity
@@ -130,7 +130,7 @@ Solidity also provides [_reference types_](https://docs.soliditylang.org/en/v0.8
 
 These types work mostly in a similar way as in other programming languages.
 However, reference types can reside in different [data locations](https://docs.soliditylang.org/en/v0.8.0/types.html#data-location), such as the permanent contract `storage` (stored on the blockchain) or in a transient `memory` (during executing a transaction).
-The behavior of allocations and assignments can be different for these data locations (e.g., assignments between storage entities do a deep copy, while in memory it is just reference assignment) so pay special attention.
+The behaviour of allocations and assignments can be different for these data locations (e.g., assignments between storage entities do a deep copy, while in memory it is just reference assignment) so pay special attention.
 For more information on types, see the [types section of the documentation](https://docs.soliditylang.org/en/v0.8.0/types.html#data-location) or an [article formalizing the memory model](https://arxiv.org/pdf/2001.03256.pdf).
 
 **Visibility.** State variable [visibility](https://docs.soliditylang.org/en/v0.8.0/contracts.html#visibility-and-getters) can be `private`, `internal` or `public`, which are similar to other programming languages.
@@ -192,7 +192,7 @@ Since 0.7.0 the constructor is always public.
 In order to prohibit instantiating a contract, it should be marked `abstract`.
 
 **Function modifiers.**
-[Function modifiers](https://docs.soliditylang.org/en/v0.8.0/contracts.html#function-modifiers) can change the behavior of functions.
+[Function modifiers](https://docs.soliditylang.org/en/v0.8.0/contracts.html#function-modifiers) can change the behaviour of functions.
 They are most commonly used to perform checks before or after executing the body of the function, especially if multiple functions require the same check.
 
 The example below declares an `owner` state variable, which stores the creator of the contract (see constructor).
@@ -271,7 +271,8 @@ fallback() external payable {
     // Do something
 }
 ```
-It is important to be aware of this behavior, because when calling some function or sending Ether to an arbitrary address, we might actually transfer the control flow, letting the callee execute its own code (see [reentrancy vulnerability](https://docs.soliditylang.org/en/v0.8.0/security-considerations.html#re-entrancy)).
+
+It is important to be aware of this behaviour, because when calling some function or sending Ether to an arbitrary address, we might actually transfer the control flow, letting the callee execute its own code (see [reentrancy vulnerability](https://docs.soliditylang.org/en/v0.8.0/security-considerations.html#re-entrancy)).
 
 **Receive function.**
 Each contract can define a special [_receive Ether function_](https://docs.soliditylang.org/en/v0.8.0/contracts.html#receive-ether-function).
@@ -391,7 +392,7 @@ This is because deploying a contract is a special transaction that also costs ex
 
 If you click on the small arrow on the left of a deployed contract, its public interface appears.
 Our example, `SimpleBank` has 4 functions.
-You can see that `payable` and `view` functions are marked with a different color.
+You can see that `payable` and `view` functions are marked with a different colour.
 View functions do not result in transactions and therefore have no execution fee.
 Click on a function to execute it.
 If a function has parameters (such as `withdraw`), you can specify its parameters in the textboxes next to the name of the function.
