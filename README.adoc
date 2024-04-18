@@ -6,8 +6,8 @@ Materials for the Ethereum/Solidity hands-on lecture of the Blockchain course.
 
 .Latest documents
 * Solidity guide
-  https://ftsrg-bta.github.io/lab-ethereum/guide.html[html]
-  https://ftsrg-bta.github.io/lab-ethereum/guide.pdf[pdf]
+  https://ftsrg-bta.github.io/lab-ethereum/guide.html[[html]]
+  https://ftsrg-bta.github.io/lab-ethereum/guide.pdf[[pdf]]
 * Vulnerabilities
-  https://ftsrg-bta.github.io/lab-ethereum/vulnerabilities.html)[html]
-  https://ftsrg-bta.github.io/lab-ethereum/vulnerabilities.pdf[pdf]
+  https://ftsrg-bta.github.io/lab-ethereum/vulnerabilities.html)[[html]]
+  https://ftsrg-bta.github.io/lab-ethereum/vulnerabilities.pdf[[pdf]]
