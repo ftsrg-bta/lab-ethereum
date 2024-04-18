@@ -306,9 +306,9 @@ See details in the [documentation](https://solidity.readthedocs.io/en/v0.8.0/con
 
 ### More Examples
 
-- [Counter](http://ftsrg.mit.bme.hu/blockchain-ethereumlab/contracts/Counter.sol): A very basic counter.
-- [BmeCoin](http://ftsrg.mit.bme.hu/blockchain-ethereumlab/contracts/BmeCoin.sol): A simple token.
-- [DNS](http://ftsrg.mit.bme.hu/blockchain-ethereumlab/contracts/DNS.sol): Domain name registration service.
+- [Counter](https://ftsrg-bta.github.io/lab-ethereum/contracts/Counter.sol): A very basic counter.
+- [BmeCoin](http://ftsrg-bta.github.io/lab-ethereum/contracts/BmeCoin.sol): A simple token.
+- [DNS](http://ftsrg-bta.github.io/lab-ethereum/contracts/DNS.sol): Domain name registration service.
 
 ### Further Reading
 
