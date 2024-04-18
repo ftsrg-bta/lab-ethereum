@@ -336,11 +336,13 @@ Remix also has some further plug-ins for debugging, static analysis and so on.
 
 In a local environment, [Visual Studio Code](http://code.visualstudio.com) has a [Solidity extension](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity) to edit Solidity contracts.
 The official compiler is [Solc](https://docs.soliditylang.org/en/v0.8.0/installing-solidity.html), which can translate contracts into EVM bytecode.
-For testing in a local environment, the [Truffle Suite](http://truffleframework.com) is recommended, which has extensive capabilities in writing and executing automated tests.
-Note that Truffle also includes a compiler internally so installing Solc can be skipped in this case.
+For testing in a local environment, [Hardhat](https://hardhat.org/) is recommended, which has extensive capabilities in writing and executing automated tests.
+Note that Hardhat also includes a compiler internally so installing Solc can be skipped in this case.
 
-_For more complex contracts and scenarios, one should also consider other features of [Truffle Suite](http://truffleframework.com).
-Finally, in order to deploy a contract to a real network one also needs a wallet such as [Metamask](https://github.com/MetaMask)._
+_You may also come across the [Truffle Suite](http://truffleframework.com), which used to be an alternative development toolkit.
+However, since September 2023, Truffle has been sunset and is no longer supported._
+
+_If you are interested: in order to deploy a contract to a real network one also needs a wallet such as [Metamask](https://github.com/MetaMask)._
 
 ### Remix
 
@@ -373,8 +375,8 @@ For a simple local test, activate the  [Deploy & run transactions plug-in](https
 The default _environment_ is JavaScript VM, which runs an Ethereum Virtual Machine (EVM) locally (i.e., it does not connect to the real network).
 This makes testing quick and free.
 Remix also supports connecting to a real network by selecting the Web3 option as an environment (which requires a wallet first).
-Besides the main network, there are also some test networks ([Ropsten](https://ropsten.etherscan.io/), [RinkeBy](https://www.rinkeby.io), [Kovan](https://kovan.etherscan.io/)).
-These networks are somewhat similar to the main network as there are multiple nodes and miners.
+Besides the main network, there are also some test networks ([Sepolia](https://sepolia.dev/) and [Holešky](https://holesky.ethpandaops.io/)).
+These networks are somewhat similar to the main network as there are multiple nodes and validators.
 However, the Ether on these networks has no real value: you can also request some free Ether to test your contracts.
 
 For the purpose of this tutorial we will be simply working with the local JavaScript VM environment.
@@ -416,101 +418,124 @@ Switching back to the previous account, `withdraw` should work (for at most 10 E
 If you make modifications to the contract, don't forget to compile and deploy again!
 You can also take a look at other plug-ins, such as the [Solidity static analysis](https://remix-ide.readthedocs.io/en/latest/static_analysis.html), the [Solidity unit testing](https://remix-ide.readthedocs.io/en/latest/unittesting.html) or the [Debugger](https://remix-ide.readthedocs.io/en/latest/debugger.html).
 
-### Local Testing with Truffle
+### Development with Hardhat
 
-[Truffle](https://www.trufflesuite.com) is a development suite for Ethereum, providing various tools, including compilation, linking, binary management, testing, deployment, network management, package management, interactive console and configurable build pipeline.
-In the following we demonstrate the unit testing capabilities of Truffle with a simple example.
-For more information, please refer to the [documentation of Truffle](https://www.trufflesuite.com/docs/truffle/overview), including [installation](https://www.trufflesuite.com/docs/truffle/getting-started/installation).
+[Hardhat](https://hardhat.org/) is a development environment for Ethereum, providing various tools, including compilation, testing, deployment, network management, and more.
+The following guide will get you started with Hardhat.
+Note however, that Hardhat has a really rich feature set, so we will only be looking at the basics.
+For more information, please refer to the [documentation of Hardhat](https://hardhat.org/hardhat-runner/docs/getting-started).
 
-**Creating a project.**
-Create and initialize a new, default Truffle project.
-This will initialize the directory structure and create some skeleton files.
-```bash
-mkdir SimpleBankTest
-cd SimpleBankTest
-truffle init
+#### Installing Hardhat
+
+All you really need to begin is [NodeJS](https://nodejs.org/en).
+Initialize a project and install hardhat using your preferred node package manager ([npm](https://www.npmjs.com/), [yarn](https://yarnpkg.com/), [pnpm](https://pnpm.io/)…):
+```shell-session
+$ npm init
+$ npm install --save-dev hardhat
 ```
 
-Put the `SimpleBank` example from above into `contracts/SimpleBank.sol`.
+#### Initializing a project
 
-Create a file `migrations/2_deploy_contracts.js` with the following content.
-```javascript
-var SimpleBank = artifacts.require("./SimpleBank.sol");
-module.exports = function(deployer) {
-  deployer.deploy(SimpleBank);
-};
+Then initialize your Hardhat project:
+```shell-session
+$ npx hardhat init
 ```
-Migrations are JavaScript files that deploy contracts to the (test) network.
 
-**Writing tests.**
-Create a test file `test/SimpleBank.js` with the following content.
+You will be offered the choice between JavaScript, TypeScript, and TypeScript with [viem](https://viem.sh/).
+For simplicity, we will now use JavaScript.
+
+You will see that Hardhat scaffolds a project for you:
+- the `contracts/` directory will have a very small example smart contract
+- in the `ignition/` directory, you will find deployment-related JavaScript code
+- finally, in `test/`, there will be [mocha-](https://mochajs.org/) (and [chai-](https://www.chaijs.com/)) based JavaScript unit tests
+
+#### Testing the smart contract
+
+Familiarize yourself with the unit test code.
+An [ethers](https://docs.ethers.org/v6/) object is implicitly available for Ethereum interactions.
+
+**Test fixture**
 ```javascript
-var SimpleBank = artifacts.require("SimpleBank");
+async function deployOneYearLockFixture() {
+    const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
+    const ONE_GWEI = 1_000_000_000;
 
-contract('SimpleBank', function(accounts) {
-    var sb; // To store the instance when running
+    const lockedAmount = ONE_GWEI;
+    const unlockTime = (await time.latest()) + ONE_YEAR_IN_SECS;
 
-    // Test case 1
-    it("Test initial balance", function() {
-        return SimpleBank.deployed().then(function(instance) {
-            sb = instance;
-            return sb.getBalance({ from: accounts[0] });
-        }).then(function(x) {
-            assert.equal(0, x, "Wrong initial balance");
-        });
-    });
+    // Contracts are deployed using the first signer/account by default
+    const [owner, otherAccount] = await ethers.getSigners();
 
-    // Test case 2
-    it("Test balance after deposit", function() {
-        return SimpleBank.deployed().then(function(instance) {
-            sb = instance;
-            return sb.deposit({ from: accounts[0], value: web3.utils.toWei('10', 'ether') });
-        }).then(function(tx_receipt) {
-            return sb.getBalance({ from: accounts[0] });
-        }).then(function(x) {
-            assert.equal(web3.utils.toWei('10', 'ether'), x, "Wrong balance");
-        }).then(function() {
-            return sb.getBalance({ from: accounts[1] });
-        }).then(function(x) {
-            assert.equal(0, x, "Wrong balance");
-        });
-    });
+    const Lock = await ethers.getContractFactory("Lock");
+    const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+
+    return { lock, unlockTime, lockedAmount, owner, otherAccount };
+}
+```
+This function defines a [test fixture](https://en.wikipedia.org/wiki/Test_fixture#Software).
+After setting some constants for later configuration, it “takes” two accounts provided by `ethers` and designates one to be the contract owner.
+Then, the `Lock` contract is deployed with the previously established variables as intialization parameters.
+The function returns a number of objects that the actual unit tests can use.
+
+**A simple unit test**
+```javascript
+it("Should set the right owner", async function () {
+      const { lock, owner } = await loadFixture(deployOneYearLockFixture);
+
+      expect(await lock.owner()).to.equal(owner.address);
 });
 ```
-The first test case creates a contract and checks if the initial balance of account 0 is zero.
-The second test case makes a deposit from account 0, and checks if the balance is modified appropriately.
-It also checks that the balance of account 1 should still be zero.
+This test simply checks that after deployment, the `owner` state variable is set correctly.
+Notice how `lock` and `owner` are “taken out” from the test fixture.
 
-**Executing tests.**
-Tests can be run with the following command.
-This will launch a local, built-in blockchain, deploy the contract and run the tests.
+**A more complicated test**
+```javascript
+it("Should revert with the right error if called from another account", async function () {
+        const { lock, unlockTime, otherAccount } = await loadFixture(
+          deployOneYearLockFixture
+        );
+
+        // We can increase the time in Hardhat Network
+        await time.increaseTo(unlockTime);
+
+        // We use lock.connect() to send a transaction from another account
+        await expect(lock.connect(otherAccount).withdraw()).to.be.revertedWith(
+          "You aren't the owner"
+        );
+});
 ```
-truffle test
-```
+Hardhat offers the feature to force the passing of time for the purpose of testing.
+Here, the correct timeout implementation is verified by advancing time by `unlockTime` and then checking that even after the timeout is passed, only the owner is allowed to call `withdraw`.
 
-If Truffle is complaining about wrong compiler version, open `truffle-config.js` at the root of the project, scroll down to `solc` and set the `version` attribute to `0.8.0` (also uncomment if needed).
-
-The output should look like the following, with all tests successfully passing.
-```
-Compiling your contracts...
-===========================
-Fetching solc version list from solc-bin. Attempt #1
-Downloading compiler. Attempt #1.
-> Compiling ./contracts/Migrations.sol
-> Compiling ./contracts/SimpleBank.sol
-> Artifacts written to /tmp/test--4464-ffkygXpC3oCc
-> Compiled successfully using:
-   - solc: 0.8.0+commit.c7dfd78e.Emscripten.clang
-
-
-
-  Contract: SimpleBank
-    Test initial balance (86ms)
-    Test balance after deposit (649ms)
-
-
-  2 passing (901ms)
+To run the tests, simply execute
+```shell-session
+$ npx hardhat test
 ```
 
-In this example we wrote unit tests using [JavaScript](https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript), but it is also possible to use [Solidity itself](https://www.trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity).
-For more information please refer to the [documentation of Truffle](https://www.trufflesuite.com/docs/truffle/overview).
+This should display something like
+```
+Compiled 2 Solidity files successfully
+
+
+  Lock
+    Deployment
+      ✔ Should set the right unlockTime (610ms)
+      ✔ Should set the right owner
+      ✔ Should receive and store the funds to lock
+      ✔ Should fail if the unlockTime is not in the future
+    Withdrawals
+      Validations
+        ✔ Should revert with the right error if called too soon
+        ✔ Should revert with the right error if called from another account
+        ✔ Shouldn't fail if the unlockTime has arrived and the owner calls it
+      Events
+        ✔ Should emit an event on withdrawals
+      Transfers
+        ✔ Should transfer the funds to the owner
+
+
+  9 passing (790ms)
+```
+
+This should get you started with Etherum smart contract development using Hardhat.
+To learn more, take a look at [the documentation](https://hardhat.org/hardhat-runner/docs/getting-started#overview).
